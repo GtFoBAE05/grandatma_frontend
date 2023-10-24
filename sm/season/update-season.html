@@ -173,7 +173,7 @@
                 await axios(
                     {
                         method: "put",
-                        url: "http://localhost:3000/api/season/" + id,
+                        url: url + "season/" + id,
                         headers: {
                             Authorization:
                                 "Bearer " + localStorage.getItem("token"),

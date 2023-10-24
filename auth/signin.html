@@ -154,6 +154,7 @@
         <script src="../assets/js/polyfill.js"></script>
         <script src="../assets/js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../index.js"></script>
 
         <script>
             async function signIn() {
@@ -165,7 +166,7 @@
                 await axios(
                     {
                         method: "post",
-                        url: "http://localhost:3000/api/auth/login",
+                        url: url + "auth/login",
                         data: {
                             email: email,
                             password: password,

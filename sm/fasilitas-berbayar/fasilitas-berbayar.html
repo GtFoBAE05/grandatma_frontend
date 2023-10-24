@@ -5,15 +5,15 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/x-icon" />
+        <link rel="shortcut icon" href="../../assets/images/favicon.svg" type="image/x-icon" />
         <title>SM | PlainAdmin Demo</title>
 
         <!-- ========== All CSS files linkup ========= -->
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="../assets/css/lineicons.css" />
-        <link rel="stylesheet" href="../assets/css/materialdesignicons.min.css" />
-        <link rel="stylesheet" href="../assets/css/fullcalendar.css" />
-        <link rel="stylesheet" href="../assets/css/main.css" />
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../assets/css/lineicons.css" />
+        <link rel="stylesheet" href="../../assets/css/materialdesignicons.min.css" />
+        <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
     </head>
 
     <body>
@@ -27,13 +27,13 @@
         <aside class="sidebar-nav-wrapper">
             <div class="navbar-logo">
                 <a href="index.html">
-                    <img src="../assets/images/logo/logo.svg" alt="logo" />
+                    <img src="../../assets/images/logo/logo.svg" alt="logo" />
                 </a>
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="nav-item active">
-                        <a href="index.html">
+                    <li class="nav-item">
+                        <a href="../index.html">
                             <span class="icon">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -48,8 +48,8 @@
                             <span class="text">Season</span>
                         </a>
                     </li>
-                    <li class="nav-item ">
-                        <a href="fasilitas-berbayar/fasilitas-berbayar.html">
+                    <li class="nav-item active">
+                        <a href="../fasilitas-berbayar/fasilitas-berbayar.html">
                             <span class="icon">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -64,8 +64,8 @@
                             <span class="text">Fasilitas Berbayar</span>
                         </a>
                     </li>
-                    <li class="nav-item ">
-                        <a href="tarif/tarif.html">
+                    <li class="nav-item">
+                        <a href="../tarif/tarif.html">
                             <span class="icon">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -81,7 +81,7 @@
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="profile/profile.html">
+                        <a href="../profile/profile.html">
                             <span class="icon">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +118,7 @@
                             <div class="header-left d-flex align-items-center">
 
                                 <div class="header-search d-none d-md-flex">
-                                    <form onsubmit="event.preventDefault(); getSeasonByName();">
+                                    <form onsubmit="event.preventDefault(); getFasilitasBerbayarByName();">
                                         <input type="text" placeholder="Search..." />
                                         <button type="submit">
                                             <i class="lni lni-search-alt"></i>
@@ -141,15 +141,15 @@
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <div class="title">
-                                    <h2>Data Season</h2>
+                                    <h2>Data Fasilitas berbayar</h2>
 
                                 </div>
                             </div>
                             <!-- end col -->
                             <div class="col-md-6">
                                 <div class="breadcrumb-wrapper">
-                                    <a href="season/add-season.html" class="main-btn primary-btn-light rounded-full btn-hover">Tambah
-                                        season</a>
+                                    <a href="add-fasilitas-berbayar.html" class="main-btn primary-btn-light rounded-full btn-hover">Tambah
+                                        Fasilitas Berbayar</a>
                                 </div>
                             </div>
                             <!-- end col -->
@@ -171,13 +171,16 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    <h6>Nama season</h6>
+                                                    <h6>Nomor</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Tanggal mulai</h6>
+                                                    <h6>Nama fasilitas</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Tanggal berakhir</h6>
+                                                    <h6>Harga(Rp)</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Action</h6>
                                                 </th>
 
                                             </tr>
@@ -232,29 +235,29 @@
         <!-- ======== main-wrapper end =========== -->
 
         <!-- ========= All Javascript files linkup ======== -->
-        <script src="../assets/js/bootstrap.bundle.min.js"></script>
-        <script src="../assets/js/Chart.min.js"></script>
-        <script src="../assets/js/dynamic-pie-chart.js"></script>
-        <script src="../assets/js/moment.min.js"></script>
-        <script src="../assets/js/fullcalendar.js"></script>
-        <script src="../assets/js/jvectormap.min.js"></script>
-        <script src="../assets/js/world-merc.js"></script>
-        <script src="../assets/js/polyfill.js"></script>
-        <script src="../assets/js/main.js"></script>
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/Chart.min.js"></script>
+        <script src="../../assets/js/dynamic-pie-chart.js"></script>
+        <script src="../../assets/js/moment.min.js"></script>
+        <script src="../../assets/js/fullcalendar.js"></script>
+        <script src="../../assets/js/jvectormap.min.js"></script>
+        <script src="../../assets/js/world-merc.js"></script>
+        <script src="../../assets/js/polyfill.js"></script>
+        <script src="../../assets/js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="../index.js"></script>
+        <script src="../../index.js"></script>
 
         <script>
-            let listSeason = [];
+            let listFasilitasBerbayar = [];
             const tBody = document.querySelector('tbody');
-            window.onload = getSeason();
+            window.onload = getFasilitasBerbayar();
             
 
-            async function getSeason() {
+            async function getFasilitasBerbayar() {
                 await axios(
                     {
                         method: "get",
-                        url: url + "season",
+                        url: url + "fasilitasberbayar",
                         headers: {
                             Authorization : "Bearer " + localStorage.getItem("token")
                         }
@@ -263,25 +266,24 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        listSeason = []
-                        season = result.data.data;
-                        season.forEach(element => {
-                            listSeason.push(element);
+                        listFasilitasBerbayar = []
+                        fasilitasBerbayar = result.data.data;
+                        fasilitasBerbayar.forEach(element => {
+                            listFasilitasBerbayar.push(element);
+
                         });
-                        const tableData = listSeason.map((item) => {
-                            let tanggalMulai = formattedDate(item.tanggal_mulai);
-                            let tanggalBerakhir = formattedDate(item.tanggal_berakhir);
+                        const tableData = listFasilitasBerbayar.map((item, index) => {
                             return `
-                            <tr>
-                                    <td>${item.nama_season}</td>
-                                    <td>${tanggalMulai}</td>
-                                    <td>${tanggalBerakhir}</td>
+                                <tr>
+                                    <td>${index+1}</td>
+                                    <td>${item.nama_fasilitas}</td>
+                                    <td>${item.harga}</td>
                                     <td>
                                         <div class="action">
-                                            <button class="text-success" onclick="redirectToUpdateSeasonPage(${item.id})">
+                                            <button class="text-success" onclick="redirectToUpdatePage(${item.id})">
                                                 <i class="mdi mdi-update"></i>
                                             </button>
-                                            <button class="text-danger" onclick="deleteSeason(${item.id})">
+                                            <button class="text-danger" onclick="deleteFasilitasBerbayar(${item.id})">
                                                 <i class="lni lni-trash-can"></i>
                                             </button>
                                         </div>    
@@ -290,33 +292,32 @@
                                 `;
                         }).join("");
                         tBody.innerHTML = tableData;
-                        console.log(listKamar);
 
                     })
                     .catch((err) => {
                         document.body.classList.remove("loading-indicator");
                         alert(err.response.data.message);
                         if(err.response.status == 403 ){
-                            window.location.href = "../auth/signin.html";
+                            window.location.href = "../../auth/signin.html";
                             localStorage.clear();
                         }
                         return Promise.reject(err);
                     });
             }
 
-            async function getSeasonByName() {
+            async function getFasilitasBerbayarByName() {
 
-                let namaSeason = document.querySelector('input[type="text"]').value;
+                let namaFasilitasBerbayar = document.querySelector('input[type="text"]').value;
 
-                if(namaSeason == ""){
-                    await getSeason();
+                if(namaFasilitasBerbayar == ""){
+                    await getFasilitasBerbayar();
                     return;
                 }
 
                 await axios(
                     {
                         method: "get",
-                        url: url + "season/search?nama=" + namaSeason,
+                        url: url + "fasilitasberbayar/search?name=" + namaFasilitasBerbayar,
                         headers: {
                             Authorization : "Bearer " + localStorage.getItem("token")
                         }
@@ -325,28 +326,24 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        console.log(result.data.data)
-                        listSeason = []
-                        console.log("clear" + listSeason)
-                        season = result.data.data;
-                        season.forEach(element => {
-                            listSeason.push(element);
-                        });
+                        listFasilitasBerbayar = []
+                        fasilitasBerbayar = result.data.data;
+                        fasilitasBerbayar.forEach(element => {
+                            listFasilitasBerbayar.push(element);
 
-                        const tableData = listSeason.map((item) => {
-                            let tanggalMulai = formattedDate(item.tanggal_mulai);
-                            let tanggalBerakhir = formattedDate(item.tanggal_berakhir);
+                        });
+                        const tableData = listFasilitasBerbayar.map((item, index) => {
                             return `
-                            <tr>
-                                    <td>${item.nama_season}</td>
-                                    <td>${tanggalMulai}</td>
-                                    <td>${tanggalBerakhir}</td>
+                                <tr>
+                                    <td>${index+1}</td>
+                                    <td>${item.nama_fasilitas}</td>
+                                    <td>${item.harga}</td>
                                     <td>
                                         <div class="action">
-                                            <button class="text-success" onclick="redirectToUpdateSeasonPage(${item.id})">
+                                            <button class="text-success" onclick="redirectToUpdatePage(${item.id})">
                                                 <i class="mdi mdi-update"></i>
                                             </button>
-                                            <button class="text-danger" onclick="deleteSeason(${item.id})">
+                                            <button class="text-danger" onclick="deleteFasilitasBerbayar(${item.id})">
                                                 <i class="lni lni-trash-can"></i>
                                             </button>
                                         </div>    
@@ -370,17 +367,17 @@
                     });
             }
 
-            function redirectToUpdateSeasonPage(id) {
+            function redirectToUpdatePage(id) {
                 params = new URLSearchParams()
                 params.append("id", id);
-                window.location.href = "season/update-season.html?" + params.toString();
+                window.location.href = "./update-fasilitas-berbayar.html?" + params.toString();
             }
 
-            async function deleteSeason(id) {
+            async function deleteFasilitasBerbayar(id) {
                 await axios(
                     {
                         method: "delete",
-                        url:  url + "season/" + id,
+                        url:  url + "fasilitasberbayar/" + id,
                         headers: {
                             Authorization : "Bearer " + localStorage.getItem("token")
                         }
@@ -390,14 +387,13 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        alert("Berhasil hapus season");
+                        alert("Berhasil hapus fasilitas berbayar");
                         window.location.reload();
 
                     })
                     .catch((err) => {
                         document.body.classList.remove("loading-indicator");
-                        console.log(err);
-                        alert(err);
+                        alert(err.response.data.message);
                         if(err.response.status == 403 ){
                             window.location.href = "../auth/signin.html";
                             localStorage.clear();

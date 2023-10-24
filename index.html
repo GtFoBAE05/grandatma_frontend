@@ -6,6 +6,8 @@
                 window.location.href = "auth/signin.html";
             } else if (localStorage.getItem("role") === "admin") {
                 window.location.href = "admin/index.html";
+            } else if (localStorage.getItem("role") === "sm") {
+                window.location.href = "sm/index.html";
             } else {
                 console.log("error");
             }

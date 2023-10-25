@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="shortcut icon"
+            href="../assets/images/favicon.svg"
+            type="image/x-icon"
+        />
+        <title>Tambah season | GrandAtma</title>
+
+        <!-- ========== All CSS files linkup ========= -->
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../assets/css/lineicons.css" />
+        <link
+            rel="stylesheet"
+            href="../../assets/css/materialdesignicons.min.css"
+        />
+        <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
+    </head>
+    <body>
+        <!-- ======== Preloader =========== -->
+        <div id="preloader">
+            <div class="spinner"></div>
+        </div>
+        <!-- ======== Preloader =========== -->
+        <!-- ======== main-wrapper start =========== -->
+        <main class="auth-wrapper">
+            <section class="signin-section">
+                <div class="container-fluid">
+                    <!-- ========== title-wrapper start ========== -->
+                    <div class="title-wrapper pt-30">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="title">
+                                    <h2>Tambah tarif</h2>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- ========== title-wrapper end ========== -->
+
+                    <div class="signin-wrapper">
+                        <div class="form-wrapper">
+                            <form
+                                onsubmit="event.preventDefault(); addTarif();"
+                            >
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="select-style-1">
+                                            <label for="tipe_kamar"
+                                                >Tipe Kamar</label
+                                            >
+                                            <div class="select-position">
+                                                <select
+                                                    id="tipe_kamar"
+                                                ></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="col-12">
+                                        <div class="select-style-1">
+                                            <label for="nama_season"
+                                                >Nama season</label
+                                            >
+                                            <div class="select-position">
+                                                <select
+                                                    id="nama_season"
+                                                ></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Tarif</label>
+                                            <input
+                                                id="tarif"
+                                                type="number"
+                                                placeholder="tarif"
+                                                name="tarif"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="col-12">
+                                        <div
+                                            class="button-group d-flex justify-content-center flex-wrap"
+                                        >
+                                            <button
+                                                class="main-btn primary-btn btn-hover w-100 text-center"
+                                                type="submit"
+                                            >
+                                                Tambah
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end row -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- ======== main-wrapper end =========== -->
+
+        <!-- ========= All Javascript files linkup ======== -->
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/Chart.min.js"></script>
+        <script src="../../assets/js/dynamic-pie-chart.js"></script>
+        <script src="../../assets/js/moment.min.js"></script>
+        <script src="../../assets/js/fullcalendar.js"></script>
+        <script src="../../assets/js/jvectormap.min.js"></script>
+        <script src="../../assets/js/world-merc.js"></script>
+        <script src="../../assets/js/polyfill.js"></script>
+        <script src="../../assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../../index.js"></script>
+
+        <script>
+            let listTipeKamar = [];
+            const tTipeKamarBody = document.getElementById("tipe_kamar");
+            let listSeason = [];
+            const tSeasonBody = document.getElementById("nama_season");
+            window.onload = getTipeKamar();
+            window.onload = getSeason();
+
+            async function getTipeKamar() {
+                await axios(
+                    {
+                        method: "get",
+                        url: url + "tipekamar",
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+                        tipeKamar = result.data.data;
+                        tipeKamar.forEach((element) => {
+                            listTipeKamar.push(element);
+                        });
+                        const optionData = listTipeKamar
+                            .map((item) => {
+                                return `
+                                    <option value="${item.id}" id="${item.id}">
+                                        ${item.nama_tipe}
+                                    </option>
+                                `;
+                            })
+                            .join("");
+                        tTipeKamarBody.innerHTML = optionData;
+                        console.log(listTipeKamar);
+                    })
+                    .catch((err) => {
+                        document.body.classList.remove("loading-indicator");
+                        alert(err.response.data.message);
+                        if (err.response.status == 403) {
+                            window.location.href = "../../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+
+            async function getSeason() {
+                await axios(
+                    {
+                        method: "get",
+                        url: url + "season",
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+                        tipeSeason = result.data.data;
+                        tipeSeason.forEach((element) => {
+                            listSeason.push(element);
+                        });
+                        const optionData = listSeason
+                            .map((item) => {
+                                return `
+                                    <option value="${item.id}" id="${item.id}">
+                                        ${item.nama_season}
+                                    </option>
+                                `;
+                            })
+                            .join("");
+                        tSeasonBody.innerHTML = optionData;
+                    })
+                    .catch((err) => {
+                        document.body.classList.remove("loading-indicator");
+                        alert(err.response.data.message);
+                        if (err.response.status == 403) {
+                            window.location.href = "../../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+
+            async function addTarif() {
+                var fieldTipeKamar = document.getElementById("tipe_kamar");
+                var fieldTipeKamarValue =
+                    fieldTipeKamar.options[fieldTipeKamar.selectedIndex].value;
+
+                var fieldSeason = document.getElementById("nama_season");
+                var fieldSeasonValue =
+                    fieldSeason.options[fieldSeason.selectedIndex].value;
+                var tarif = document.querySelector('input[name="tarif"]').value;
+                await axios(
+                    {
+                        method: "post",
+                        url: url + "tarif",
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                        data: {
+                            id_tipe_kamar: Number(fieldTipeKamarValue),
+                            id_season: Number(fieldSeasonValue),
+                            tarif: Number(tarif),
+                        },
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+                        alert("Berhasil menambahkan tarif");
+                        window.location.href = "./tarif.html";
+                    })
+                    .catch((err) => {
+                        document.body.classList.remove("loading-indicator");
+
+                        alert(err.response.data.message);
+                        if (err.response.status == 403) {
+                            window.location.href = "../../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+        </script>
+    </body>
+</html>

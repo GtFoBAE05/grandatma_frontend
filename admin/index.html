@@ -298,14 +298,11 @@
                         document.body.classList.remove("loading-indicator");
                         console.log(result.data.data)
                         listKamar = []
-                        console.log("clear" + listKamar)
                         kamar = result.data.data;
-                        console.log("data kamar" + kamar.nomor_kamar)
-                        listKamar.push(kamar)
-                        // kamar.forEach(element => {
-                        //     console.log(element);
-                        //     listKamar.push(element);
-                        // });
+                        kamar.forEach(element => {
+                            listKamar.push(element);
+
+                        });
 
                         const tableData = listKamar.map((item) => {
                             console.log(item.id)

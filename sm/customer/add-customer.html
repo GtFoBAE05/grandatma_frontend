@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="shortcut icon"
+            href="../../assets/images/favicon.svg"
+            type="image/x-icon"
+        />
+        <title>Tambah Customer | GrandAtma</title>
+
+        <!-- ========== All CSS files linkup ========= -->
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../assets/css/lineicons.css" />
+        <link
+            rel="stylesheet"
+            href="../../assets/css/materialdesignicons.min.css"
+        />
+        <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
+    </head>
+    <body>
+        <!-- ======== Preloader =========== -->
+        <div id="preloader">
+            <div class="spinner"></div>
+        </div>
+        <!-- ======== Preloader =========== -->
+        <!-- ======== main-wrapper start =========== -->
+        <main class="auth-wrapper">
+            <section class="signin-section">
+                <div class="container-fluid">
+                    <!-- ========== title-wrapper start ========== -->
+                    <div class="title-wrapper pt-30">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="title">
+                                    <h2>Tambah customer</h2>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- ========== title-wrapper end ========== -->
+
+                    <div class="signin-wrapper">
+                        <div class="form-wrapper">
+                            <form
+                                onsubmit="event.preventDefault(); addCustomer();"
+                            >
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Name</label>
+                                            <input
+                                                name="name"
+                                                type="text"
+                                                placeholder="Name"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Email</label>
+                                            <input
+                                                name="email"
+                                                type="email"
+                                                placeholder="Email"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Usernane</label>
+                                            <input
+                                                name="username"
+                                                type="username"
+                                                placeholder="Username"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>NoTelp</label>
+                                            <input
+                                                name="notelp"
+                                                type="tel"
+                                                placeholder="NoTelp"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Password</label>
+                                            <input
+                                                name="password"
+                                                type="password"
+                                                placeholder="Password"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="select-style-1">
+                                        <label>Tipe customer</label>
+                                        <div class="select-position">
+                                            <select name="tipe_customer">
+                                                <option value="">
+                                                    Pilih status
+                                                </option>
+                                                <option value="customer">
+                                                    individu
+                                                </option>
+                                                <option value="group">
+                                                    group
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="col-12">
+                                        <div
+                                            class="button-group d-flex justify-content-center flex-wrap"
+                                        >
+                                            <button
+                                                class="main-btn primary-btn btn-hover w-100 text-center"
+                                                type="submit"
+                                            >
+                                                Tambah
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end row -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- ======== main-wrapper end =========== -->
+
+        <!-- ========= All Javascript files linkup ======== -->
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/Chart.min.js"></script>
+        <script src="../../assets/js/dynamic-pie-chart.js"></script>
+        <script src="../../assets/js/moment.min.js"></script>
+        <script src="../../assets/js/fullcalendar.js"></script>
+        <script src="../../assets/js/jvectormap.min.js"></script>
+        <script src="../../assets/js/world-merc.js"></script>
+        <script src="../../assets/js/polyfill.js"></script>
+        <script src="../../assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../../index.js"></script>
+
+        <script>
+            const tBody = document.querySelector("select");
+
+            async function addCustomer() {
+                var name = document.querySelector('input[name="name"]').value;
+                var email = document.querySelector('input[name="email"]').value;
+
+                var username = document.querySelector(
+                    'input[name="username"]'
+                ).value;
+
+                var notelp = document.querySelector(
+                    'input[name="notelp"]'
+                ).value;
+                var password = document.querySelector(
+                    'input[name="password"]'
+                ).value;
+
+                var tipeCustomer = document.querySelector(
+                    'select[name="tipe_customer"]'
+                ).selectedOptions[0].value;
+
+                await axios(
+                    {
+                        method: "post",
+                        url: url + "auth/signup",
+                        data: {
+                            nama: name,
+                            email: email,
+                            username: username,
+                            notelp: notelp,
+                            password: password,
+                            role: tipeCustomer,
+                        },
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+                        alert("Sukses tambah customer");
+                        window.location.href = "./customer.html";
+                    })
+                    .catch((err) => {
+                        document.body.classList.remove("loading-indicator");
+                        alert(err);
+                        if (err.response.status == 403) {
+                            window.location.href = "../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+        </script>
+    </body>
+</html>

@@ -7,7 +7,7 @@ function formattedDate(inputDate) {
     const month = date.toLocaleString("default", { month: "long" });
     const year = date.getFullYear();
     const hour = date.getHours();
-    const minutes = date.getMinutes();
+    const minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
 
     return `${day < 10 ? "0" : ""}${day}-${month}-${year} ${hour}:${minutes}`;
 }

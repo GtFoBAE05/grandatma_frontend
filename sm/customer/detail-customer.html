@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="shortcut icon"
+            href="../../assets/images/favicon.svg"
+            type="image/x-icon"
+        />
+        <title>Profile | PlainAdmin Demo</title>
+
+        <!-- ========== All CSS files linkup ========= -->
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../assets/css/lineicons.css" />
+        <link
+            rel="stylesheet"
+            href="../../assets/css/materialdesignicons.min.css"
+        />
+        <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
+    </head>
+    <body>
+        <!-- ======== Preloader =========== -->
+        <div id="preloader">
+            <div class="spinner"></div>
+        </div>
+        <!-- ======== Preloader =========== -->
+
+        <!-- ======== main-wrapper start =========== -->
+        <main class="auth-wrapper">
+
+            <div class="container-fluid">
+                  <div class="card-style settings-card-1 mt-30 mb-30">
+                    <div class="title mb-30 d-flex justify-content-between align-items-center">
+                      <h6>Profile</h6>
+                    </div>
+                    <div class="profile-info">
+                      <div class="d-flex align-items-center mb-30">
+                        <div class="profile-image">
+                          <img src="https://3.bp.blogspot.com/-UI5bnoLTRAE/VuU18_s6bRI/AAAAAAAADGA/uafLtb4ICCEK8iO3NOh1C_Clh86GajUkw/s320/guest.png" alt="" />
+                          <!-- <div class="update-image">
+                            <input type="file" />
+                            <label for=""><i class="lni lni-cloud-upload"></i></label>
+                          </div> -->
+                        </div>
+                        <div class="profile-meta">
+                          <h5 class="text-bold text-dark mb-10" id="name">John Doe</h5>
+                        </div>
+                      </div>
+                      <div class="input-style-1">
+                        <label>Username</label>
+                        <input type="username" placeholder="admin@example.com" value="Username" name="username" />
+                      </div>
+                      <div class="input-style-1">
+                        <label>Email</label>
+                        <input type="email" placeholder="admin@example.com" value="Email" name="email"/>
+                      </div>
+                      <div class="input-style-1">
+                        <label>Nomor Telpon</label>
+                        <input type="tel" placeholder="admin@example.com" value="telp" name="telp"/>
+                      </div>
+                      <div class="input-style-1">
+                        <label>Role</label>
+                        <input type="text" placeholder="admin@example.com" value="role" name="role"/>
+                      </div>
+                      <div class="input-style-1">
+                        <label>Terdaftar sejak</label>
+                        <input type="text" placeholder="admin@example.com" value="created_at" name="created_at"/>
+                      </div>
+                    </div>
+                  <!-- end card -->
+                </div>
+                <!-- end col -->
+
+            
+        </main>
+        <!-- ======== main-wrapper end =========== -->
+
+        <!-- ========= All Javascript files linkup ======== -->
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/Chart.min.js"></script>
+        <script src="../../assets/js/dynamic-pie-chart.js"></script>
+        <script src="../../assets/js/moment.min.js"></script>
+        <script src="../../assets/js/fullcalendar.js"></script>
+        <script src="../../assets/js/jvectormap.min.js"></script>
+        <script src="../../assets/js/world-merc.js"></script>
+        <script src="../../assets/js/polyfill.js"></script>
+        <script src="../../assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../../index.js"></script>
+
+        <script>
+            var params = new URLSearchParams(window.location.search);
+            var id = params.get("id");
+            window.onload = getUserDetail();
+
+            async function getUserDetail() {
+
+                await axios(
+                    {
+                        method: "get",
+                        url: url + "user/" + id,
+                        headers: {
+                            Authorization : "Bearer " + localStorage.getItem("token")
+                        }
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+                        document.getElementById('name').textContent = result.data.data.nama
+                        document.querySelector('input[name="username"]').value = result.data.data.username
+                        document.querySelector('input[name="email"]').value = result.data.data.email
+                        document.querySelector('input[name="telp"]').value = result.data.data.notelp
+                        document.querySelector('input[name="role"]').value = result.data.data.role
+                        registerSince = formattedDate(result.data.data.created_at)
+                        document.querySelector('input[name="created_at"]').value = registerSince
+                    })
+                    .catch((err) => {
+                        document.body.classList.remove("loading-indicator");
+                        if(err.response.status == 403 ){
+                            window.location.href = "../../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+
+        </script>
+
+    </body>
+</html>

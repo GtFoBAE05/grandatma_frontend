@@ -8,6 +8,14 @@
                 window.location.href = "admin/index.html";
             } else if (localStorage.getItem("role") === "sm") {
                 window.location.href = "sm/index.html";
+            } else if (localStorage.getItem("role") === "gm") {
+                window.location.href = "gm/index.html";
+            } else if (localStorage.getItem("role") === "owner") {
+                window.location.href = "owner/index.html";
+            } else if (localStorage.getItem("role") === "customer") {
+                window.location.href = "customer/index.html";
+            } else if (localStorage.getItem("role") === "fo") {
+                window.location.href = "front-office/index.html";
             } else {
                 console.log("error");
             }

@@ -180,14 +180,20 @@
                         localStorage.setItem("role", role);
                         localStorage.setItem("token", result.data.token);
 
-                        if (role == "admin") {
+                        if (role === "admin") {
                             window.location.href = "../admin/index.html";
-                        } else if (role == "customer") {
+                        } else if (role === "customer") {
                             window.location.href = "../customer/index.html";
-                        } else if (role == "sm") {
+                        } else if (role === "sm") {
                             window.location.href = "../sm/index.html";
-                        } else if (role == "fo") {
-                            window.location.href = "../fo/index.html";
+                        } else if (role === "gm") {
+                            window.location.href = "../gm/index.html";
+                        } else if (role === "owner") {
+                            window.location.href = "../owner/index.html";
+                        } else if (role === "customer") {
+                            window.location.href = "../customer/index.html";
+                        } else if (role === "fo") {
+                            window.location.href = "../front-office/index.html";
                         }
                     })
                     .catch((err) => {

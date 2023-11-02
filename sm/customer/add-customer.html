@@ -181,6 +181,18 @@
                     'select[name="tipe_customer"]'
                 ).selectedOptions[0].value;
 
+                if (
+                    name == "" ||
+                    email == "" ||
+                    username == "" ||
+                    notelp == "" ||
+                    password == "" ||
+                    tipeCustomer == ""
+                ) {
+                    const myToast = new Toast("Mohon isi semua field").show();
+                    return;
+                }
+
                 await axios(
                     {
                         method: "post",
@@ -198,7 +210,11 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        alert("Sukses tambah customer");
+                        localStorage.setItem("showToast", "true");
+                        localStorage.setItem(
+                            "message",
+                            "Sukses tambah customer"
+                        );
                         window.location.href = "./customer.html";
                     })
                     .catch((err) => {

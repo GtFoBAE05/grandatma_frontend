@@ -282,7 +282,11 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        alert("Berhasil update tarif");
+                        localStorage.setItem("showToast", "true");
+                        localStorage.setItem(
+                            "message",
+                            "Berhasil update tarif"
+                        );
                         window.location.href = "./tarif.html";
                     })
                     .catch((err) => {

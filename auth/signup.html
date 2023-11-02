@@ -209,6 +209,17 @@
                     'input[name="password"]'
                 ).value;
 
+                if (
+                    name == "" ||
+                    email == "" ||
+                    username == "" ||
+                    notelp == "" ||
+                    password == ""
+                ) {
+                    alert("Please fill all the form");
+                    return;
+                }
+
                 await axios(
                     {
                         method: "post",

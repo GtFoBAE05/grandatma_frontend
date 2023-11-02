@@ -170,6 +170,17 @@
                 ).value;
                 var tanggalMulai = document.getElementById("tanggal_mulai").value;
                 var tanggalSelesai = document.getElementById("tanggal_selesai").value;
+
+                if(isTwoMonthsAhead(tanggalMulai) == false){
+                    const myToast = new Toast("Tanggal mulai minimal 2 bulan sebelum season berlangsung").show();
+                    return;
+                }
+
+                if (tanggalMulai > tanggalSelesai) {
+                    const myToast = new Toast("Tanggal selesai ada sebelum tanggal mulai.").show();
+                    return;
+                } 
+
                 await axios(
                     {
                         method: "put",
@@ -188,7 +199,8 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        alert("Berhasil update season");
+                        localStorage.setItem('showToast', 'true');
+                        localStorage.setItem('message', "Berhasil update season");
                         window.location.href = "../index.html";
                     })
                     .catch((err) => {

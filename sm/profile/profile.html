@@ -30,11 +30,7 @@
 
         <!-- ======== sidebar-nav start =========== -->
         <aside class="sidebar-nav-wrapper">
-            <div class="navbar-logo">
-                <a href="../index.html">
-                    <img src="../../assets/images/logo/logo.svg" alt="logo" />
-                </a>
-            </div>
+            
             <nav class="sidebar-nav">
                 <ul>
                     <li class="nav-item">
@@ -159,19 +155,19 @@
                       </div>
                       <div class="input-style-1">
                         <label>Username</label>
-                        <input type="username" placeholder="admin@example.com" value="Username" name="username" />
+                        <input type="username" placeholder="admin@example.com" value="Username" name="username" disabled/>
                       </div>
                       <div class="input-style-1">
                         <label>Email</label>
-                        <input type="email" placeholder="admin@example.com" value="Email" name="email"/>
+                        <input type="email" placeholder="admin@example.com" value="Email" name="email" disabled/>
                       </div>
                       <div class="input-style-1">
                         <label>Nomor Telpon</label>
-                        <input type="tel" placeholder="admin@example.com" value="0123456" name="telp"/>
+                        <input type="tel" placeholder="admin@example.com" value="0123456" name="telp" disabled/>
                       </div>
                       <div class="input-style-1">
                         <label>Password</label>
-                        <input type="password" value="admin@example.com" name="password"/>
+                        <input type="password" value="admin@example.com" name="password" disabled/>
                       </div>
                       <button class="main-btn danger-btn rounded-full btn-hover" onclick="logout()">
                         Logout
@@ -199,7 +195,16 @@
         <script src="../../index.js"></script>
 
         <script>
-            window.onload = getUserDetail();
+            window.onload = function() {
+                const showToast = localStorage.getItem('showToast');
+                if (showToast === 'true') {
+                    let pesan = localStorage.getItem('message');
+                    const myToast = new Toast(pesan).show();
+                    localStorage.setItem('showToast', 'false');
+                    localStorage.setItem('message', '');
+                }
+                getUserDetail();
+            };
 
             async function getUserDetail() {
 

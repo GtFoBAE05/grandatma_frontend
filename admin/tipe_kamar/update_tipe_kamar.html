@@ -9,7 +9,7 @@
             href="../../assets/images/favicon.svg"
             type="image/x-icon"
         />
-        <title>Update kamar | GrandAtma</title>
+        <title>update tipe kamar | GrandAtma</title>
 
         <!-- ========== All CSS files linkup ========= -->
         <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
@@ -36,7 +36,7 @@
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <div class="title">
-                                    <h2>Update kamar</h2>
+                                    <h2>Update tipe kamar</h2>
                                 </div>
                             </div>
                             <!-- end col -->
@@ -48,57 +48,61 @@
                     <div class="signin-wrapper">
                         <div class="form-wrapper">
                             <form
-                                onsubmit="event.preventDefault(); updateKamar();"
+                                onsubmit="event.preventDefault(); updateTipeKamar();"
                             >
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="input-style-1">
-                                            <label>Nomor kamar</label>
+                                            <label>Nama tipe</label>
                                             <input
-                                                type="number"
-                                                placeholder="Nomor Kamar"
-                                                name="nomor_kamar"
+                                                type="text"
+                                                placeholder="Nama tipe"
+                                                name="nama_tipe"
                                             />
                                         </div>
                                     </div>
                                     <!-- end col -->
-                                    <div class="select-style-1">
-                                        <label for="tipe_kamar"
-                                            >Tipe Kamar</label
-                                        >
-                                        <div class="select-position">
-                                            <select id="tipe_kamar">
-                                                <option value="">
-                                                    Select category
-                                                </option>
-                                                <option value="">
-                                                    Category one
-                                                </option>
-                                                <option value="">
-                                                    Category two
-                                                </option>
-                                                <option value="">
-                                                    Category three
-                                                </option>
-                                            </select>
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Pilihan tempat tidur</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Pilihan tempat tidur"
+                                                name="pilihan_tempat_tidur"
+                                            />
                                         </div>
                                     </div>
                                     <!-- end col -->
-
-                                    <div class="select-style-1">
-                                        <label>Status Kamar</label>
-                                        <div class="select-position">
-                                            <select name="status_kamar">
-                                                <option value="">
-                                                    Pilih status
-                                                </option>
-                                                <option value="true">
-                                                    tersedia
-                                                </option>
-                                                <option value="false">
-                                                    tidak tersedia
-                                                </option>
-                                            </select>
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Fasilitas</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Fasilitas"
+                                                name="fasilitas"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Deskripsi</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Deskripsi"
+                                                name="deskripsi"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Rincian kamar</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Rincian kamar"
+                                                name="rincian_kamar"
+                                            />
                                         </div>
                                     </div>
                                     <!-- end col -->
@@ -111,7 +115,7 @@
                                                 class="main-btn primary-btn btn-hover w-100 text-center"
                                                 type="submit"
                                             >
-                                                Tambah
+                                                Update
                                             </button>
                                         </div>
                                     </div>
@@ -139,19 +143,16 @@
         <script src="../../index.js"></script>
 
         <script>
-            let listTipeKamar = [];
             var params = new URLSearchParams(window.location.search);
             var id = params.get("id");
-
             const tBody = document.querySelector("select");
             window.onload = getTipeKamar();
-            window.onload = getKamar();
 
             async function getTipeKamar() {
                 await axios(
                     {
                         method: "get",
-                        url: url + "tipekamar",
+                        url: url + "tipekamar/" + parseInt(id),
                         headers: {
                             Authorization:
                                 "Bearer " + localStorage.getItem("token"),
@@ -161,21 +162,21 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        tipeKamar = result.data.data;
-                        tipeKamar.forEach((element) => {
-                            listTipeKamar.push(element);
-                        });
-                        const optionData = listTipeKamar
-                            .map((item) => {
-                                return `
-                                    <option value="${item.id}" id="${item.id}">
-                                        ${item.nama_tipe}
-                                    </option>
-                                `;
-                            })
-                            .join("");
-                        tBody.innerHTML = optionData;
-                        console.log(listTipeKamar);
+                        document.querySelector(
+                            'input[name="nama_tipe"]'
+                        ).value = result.data.data.nama_tipe;
+                        document.querySelector(
+                            'input[name="pilihan_tempat_tidur"]'
+                        ).value = result.data.data.pilihan_tempat_tidur;
+                        document.querySelector(
+                            'input[name="fasilitas"]'
+                        ).value = result.data.data.fasilitas;
+                        document.querySelector(
+                            'input[name="deskripsi"]'
+                        ).value = result.data.data.deskripsi;
+                        document.querySelector(
+                            'input[name="rincian_kamar"]'
+                        ).value = result.data.data.rincian_kamar;
                     })
                     .catch((err) => {
                         document.body.classList.remove("loading-indicator");
@@ -188,73 +189,52 @@
                     });
             }
 
-            async function getKamar() {
-                await axios(
-                    {
-                        method: "get",
-                        url: url + "kamar/" + id,
-                        headers: {
-                            Authorization:
-                                "Bearer " + localStorage.getItem("token"),
-                        },
-                    },
-                    document.body.classList.add("loading-indicator")
-                )
-                    .then((result) => {
-                        document.body.classList.remove("loading-indicator");
-                        document.querySelector(
-                            'input[name="nomor_kamar"]'
-                        ).value = result.data.data.nomor_kamar;
-
-                        var id = result.data.data.id_tipe_kamar;
-                        document.getElementById("tipe_kamar").value = id;
-
-                        document.querySelector(
-                            'select[name="status_kamar"]'
-                        ).value = result.data.data.status;
-                    })
-                    .catch((err) => {
-                        document.body.classList.remove("loading-indicator");
-                        alert(err.response.data.message);
-                        if (err.response.status == 403) {
-                            window.location.href = "../../auth/signin.html";
-                            localStorage.clear();
-                        }
-                        return Promise.reject(err);
-                    });
-            }
-
-            async function updateKamar() {
-                var nomorKamar = document.querySelector(
-                    'input[name="nomor_kamar"]'
+            async function updateTipeKamar() {
+                var namaTipe = document.querySelector(
+                    'input[name="nama_tipe"]'
                 ).value;
-                var fieldTipeKamar = document.getElementById("tipe_kamar");
-                var fieldTipeKamarValue =
-                    fieldTipeKamar.options[fieldTipeKamar.selectedIndex].value;
-                var status = document.querySelector(
-                    'select[name="status_kamar"]'
-                ).selectedOptions[0].value;
+
+                var pilihanTempatTidur = document.querySelector(
+                    'input[name="pilihan_tempat_tidur"]'
+                ).value;
+
+                var fasilitas = document.querySelector(
+                    'input[name="fasilitas"]'
+                ).value;
+
+                var deskripsi = document.querySelector(
+                    'input[name="deskripsi"]'
+                ).value;
+
+                var rincianKamar = document.querySelector(
+                    'input[name="rincian_kamar"]'
+                ).value;
 
                 if (
-                    nomorKamar == "" ||
-                    fieldTipeKamarValue == "" ||
-                    status == ""
+                    namaTipe == "" ||
+                    pilihanTempatTidur == "" ||
+                    fasilitas == "" ||
+                    deskripsi == "" ||
+                    rincianKamar == ""
                 ) {
                     const myToast = new Toast("Mohon isi semua field").show();
                     return;
                 }
+
                 await axios(
                     {
                         method: "put",
-                        url: url + "kamar/" + id,
+                        url: url + "tipekamar/" + parseInt(id),
                         headers: {
                             Authorization:
                                 "Bearer " + localStorage.getItem("token"),
                         },
                         data: {
-                            nomor_kamar: nomorKamar,
-                            id_tipe_kamar: Number(fieldTipeKamarValue),
-                            status: status === "true",
+                            nama_tipe: namaTipe,
+                            pilihan_tempat_tidur: pilihanTempatTidur,
+                            fasilitas: fasilitas,
+                            deskripsi: deskripsi,
+                            rincian_kamar: rincianKamar,
                         },
                     },
                     document.body.classList.add("loading-indicator")
@@ -264,9 +244,9 @@
                         localStorage.setItem("showToast", "true");
                         localStorage.setItem(
                             "message",
-                            "Berhasil update kamar"
+                            "Berhasil update tipe kamar"
                         );
-                        window.location.href = "../index.html";
+                        window.location.href = "./tipe_kamar.html";
                     })
                     .catch((err) => {
                         document.body.classList.remove("loading-indicator");

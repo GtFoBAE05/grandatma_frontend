@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
             rel="shortcut icon"
-            href="../assets/images/favicon.svg"
+            href="../../assets/images/favicon.svg"
             type="image/x-icon"
         />
-        <title>Tambah fasilitas berbayar | GrandAtma</title>
+        <title>Tambah tipe | GrandAtma</title>
 
         <!-- ========== All CSS files linkup ========= -->
         <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
@@ -36,7 +36,7 @@
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <div class="title">
-                                    <h2>Tambah fasilitas berbayar</h2>
+                                    <h2>Tambah tipe kamar</h2>
                                 </div>
                             </div>
                             <!-- end col -->
@@ -48,32 +48,64 @@
                     <div class="signin-wrapper">
                         <div class="form-wrapper">
                             <form
-                                onsubmit="event.preventDefault(); addFasilitasBerbayar();"
+                                onsubmit="event.preventDefault(); addTipeKamar();"
                             >
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="input-style-1">
-                                            <label>Nama Fasilitas berbayar</label>
+                                            <label>Nama tipe</label>
                                             <input
                                                 type="text"
-                                                placeholder="Nama fasilitas berbayar"
-                                                name="nama_fasilitas_berbayar"
+                                                placeholder="Nama tipe"
+                                                name="nama_tipe"
                                             />
                                         </div>
                                     </div>
                                     <!-- end col -->
-
-                                        <div class="col-12">
-                                            <div class="input-style-1">
-                                                <label>Harga</label>
-                                                <input
-                                                    id="harga"
-                                                    type="number"
-                                                    placeholder="Harga"
-                                                    name="harga"
-                                                />
-                                            </div>
-                                        <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Pilihan tempat tidur</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Pilihan tempat tidur"
+                                                name="pilihan_tempat_tidur"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Fasilitas</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Fasilitas"
+                                                name="fasilitas"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Deskripsi</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Deskripsi"
+                                                name="deskripsi"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Rincian kamar</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Rincian kamar"
+                                                name="rincian_kamar"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
 
                                     <div class="col-12">
                                         <div
@@ -111,13 +143,36 @@
         <script src="../../index.js"></script>
 
         <script>
+            const tBody = document.querySelector("select");
 
+            async function addTipeKamar() {
+                var namaTipe = document.querySelector(
+                    'input[name="nama_tipe"]'
+                ).value;
 
-            async function addFasilitasBerbayar() {
-                var nama = document.querySelector('input[name="nama_fasilitas_berbayar"]').value; 
-                var harga = document.getElementById("harga").value; 
+                var pilihanTempatTidur = document.querySelector(
+                    'input[name="pilihan_tempat_tidur"]'
+                ).value;
 
-                if(nama == "" || harga == ""){
+                var fasilitas = document.querySelector(
+                    'input[name="fasilitas"]'
+                ).value;
+
+                var deskripsi = document.querySelector(
+                    'input[name="deskripsi"]'
+                ).value;
+
+                var rincianKamar = document.querySelector(
+                    'input[name="rincian_kamar"]'
+                ).value;
+
+                if (
+                    namaTipe == "" ||
+                    pilihanTempatTidur == "" ||
+                    fasilitas == "" ||
+                    deskripsi == "" ||
+                    rincianKamar == ""
+                ) {
                     const myToast = new Toast("Mohon isi semua field").show();
                     return;
                 }
@@ -125,26 +180,33 @@
                 await axios(
                     {
                         method: "post",
-                        url: url + "fasilitasberbayar",
+                        url: url + "tipekamar",
                         headers: {
                             Authorization:
                                 "Bearer " + localStorage.getItem("token"),
                         },
                         data: {
-                            nama_fasilitas : nama,
-                            harga : Number(harga),
+                            nama_tipe: namaTipe,
+                            pilihan_tempat_tidur: pilihanTempatTidur,
+                            fasilitas: fasilitas,
+                            deskripsi: deskripsi,
+                            rincian_kamar: rincianKamar,
                         },
                     },
                     document.body.classList.add("loading-indicator")
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        localStorage.setItem('showToast', 'true');
-                        localStorage.setItem('message', "Berhasil menambahkan fasiltias berbayar");
-                        window.location.href = "./fasilitas-berbayar.html";
+                        localStorage.setItem("showToast", "true");
+                        localStorage.setItem(
+                            "message",
+                            "Berhasil tambah tipe kamar"
+                        );
+                        window.location.href = "./tipe_kamar.html";
                     })
                     .catch((err) => {
                         document.body.classList.remove("loading-indicator");
+                        console.log(nomorKamar, tipeKamar, status);
 
                         alert(err.response.data.message);
                         if (err.response.status == 403) {

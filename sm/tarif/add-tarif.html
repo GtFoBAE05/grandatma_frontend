@@ -225,6 +225,12 @@
                 var fieldSeasonValue =
                     fieldSeason.options[fieldSeason.selectedIndex].value;
                 var tarif = document.querySelector('input[name="tarif"]').value;
+
+                if (tarif == "") {
+                    const myToast = new Toast("Mohon isi semua field").show();
+                    return;
+                }
+
                 await axios(
                     {
                         method: "post",
@@ -243,7 +249,11 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        alert("Berhasil menambahkan tarif");
+                        localStorage.setItem("showToast", "true");
+                        localStorage.setItem(
+                            "message",
+                            "Berhasil menambahkan tarif"
+                        );
                         window.location.href = "./tarif.html";
                     })
                     .catch((err) => {

@@ -125,7 +125,7 @@
         <script src="../../assets/js/polyfill.js"></script>
         <script src="../../assets/js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="../index.js"></script>
+        <script src="../../index.js"></script>
 
         <script>
             
@@ -136,6 +136,18 @@
                 ).value;
                 var tanggalMulai = document.getElementById("tanggal_mulai").value;
                 var tanggalSelesai = document.getElementById("tanggal_selesai").value;
+
+                if(isTwoMonthsAhead(tanggalMulai) == false){
+                    const myToast = new Toast("Tanggal mulai minimal 2 bulan sebelum season berlangsung").show();
+                    return;
+                }
+
+                if (tanggalMulai > tanggalSelesai) {
+                    const myToast = new Toast("Tanggal selesai ada sebelum tanggal mulai.").show();
+                    return;
+                } 
+
+
                 await axios(
                     {
                         method: "post",
@@ -154,7 +166,8 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        alert("Berhasil menambahkan season");
+                        localStorage.setItem('showToast', 'true');
+                        localStorage.setItem('message', "Berhasil menambahkan season");
                         window.location.href = "../index.html";
                     })
                     .catch((err) => {

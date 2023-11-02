@@ -131,6 +131,16 @@
                                                 >Create an account</a
                                             >
                                         </p>
+                                        <span></span>
+                                        <p
+                                            class="text-sm text-medium text-dark text-center"
+                                        >
+                                            Learn more about Grandatma by
+                                            clicking
+                                            <a href="hotel-information.html"
+                                                >here</a
+                                            >
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -162,6 +172,11 @@
                 var password = document.querySelector(
                     'input[type="password"]'
                 ).value;
+
+                if (email == "" || password == "") {
+                    alert("Email atau password tidak boleh kosong");
+                    return;
+                }
 
                 await axios(
                     {

@@ -152,6 +152,12 @@
             async function updateFasilitasBerbayar() {
                 var nama = document.querySelector('input[name="nama_fasilitas_berbayar"]').value
                 var harga = document.getElementById("harga").value
+
+                if(nama == "" || harga == ""){
+                    const myToast = new Toast("Mohon isi semua field").show();
+                    return
+                }
+
                 await axios(
                     {
                         method: "put",
@@ -169,7 +175,8 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        alert("Berhasil update fasilits berbayar");
+                        localStorage.setItem('showToast', 'true');
+                        localStorage.setItem('message', "Berhasil update fasilits berbayar");
                         window.location.href = "./fasilitas-berbayar.html";
                     })
                     .catch((err) => {

@@ -136,7 +136,7 @@
         <script src="../../assets/js/polyfill.js"></script>
         <script src="../../assets/js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="../index.js"></script>
+        <script src="../../index.js"></script>
 
         <script>
             let listTipeKamar = [];
@@ -185,10 +185,6 @@
                     });
             }
 
-            function alertaa() {
-                alert(status);
-            }
-
             async function addTipeKamar() {
                 var nomorKamar = document.querySelector(
                     'input[name="nomor_kamar"]'
@@ -199,6 +195,16 @@
                 var status = document.querySelector(
                     'select[name="status_kamar"]'
                 ).selectedOptions[0].value;
+
+                if (
+                    nomorKamar == "" ||
+                    fieldTipeKamarValue == "" ||
+                    status == ""
+                ) {
+                    const myToast = new Toast("Mohon isi semua field").show();
+                    return;
+                }
+
                 await axios(
                     {
                         method: "post",
@@ -217,7 +223,11 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        alert("Berhasil menambahkan kamar");
+                        localStorage.setItem("showToast", "true");
+                        localStorage.setItem(
+                            "message",
+                            "Berhasil menambahkan kamar"
+                        );
                         window.location.href = "../index.html";
                     })
                     .catch((err) => {

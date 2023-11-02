@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="../assets/images/favicon.svg" type="image/x-icon" />
-        <title>SM | PlainAdmin Demo</title>
+        <title>SM | Grandatma</title>
 
         <!-- ========== All CSS files linkup ========= -->
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
@@ -25,11 +25,7 @@
 
         <!-- ======== sidebar-nav start =========== -->
         <aside class="sidebar-nav-wrapper">
-            <div class="navbar-logo">
-                <a href="index.html">
-                    <img src="../assets/images/logo/logo.svg" alt="logo" />
-                </a>
-            </div>
+           
             <nav class="sidebar-nav">
                 <ul>
                     <li class="nav-item active">
@@ -217,33 +213,7 @@
             </section>
             <!-- ========== table components end ========== -->
 
-            <!-- ========== footer start =========== -->
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-6 order-last order-md-first">
-                            <div class="copyright text-center text-md-start">
-                                <p class="text-sm">
-                                    Designed and Developed by
-                                    <a href="https://plainadmin.com" rel="nofollow" target="_blank">
-                                        PlainAdmin
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-                        <!-- end col-->
-                        <div class="col-md-6">
-                            <div class="terms d-flex justify-content-center justify-content-md-end">
-                                <a href="#0" class="text-sm">Term & Conditions</a>
-                                <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end row -->
-                </div>
-                <!-- end container -->
-            </footer>
-            <!-- ========== footer end =========== -->
+            
         </main>
         <!-- ======== main-wrapper end =========== -->
 
@@ -263,7 +233,16 @@
         <script>
             let listSeason = [];
             const tBody = document.querySelector('tbody');
-            window.onload = getSeason();
+            window.onload = function() {
+                const showToast = localStorage.getItem('showToast');
+                if (showToast === 'true') {
+                    let pesan = localStorage.getItem('message');
+                    const myToast = new Toast(pesan).show();
+                    localStorage.setItem('showToast', 'false');
+                    localStorage.setItem('message', '');
+                }
+                getSeason();
+            };
             
 
             async function getSeason() {
@@ -294,10 +273,10 @@
                                     <td>${tanggalBerakhir}</td>
                                     <td>
                                         <div class="action">
-                                            <button class="text-success" onclick="redirectToUpdateSeasonPage(${item.id})">
+                                            <button class="text-success" onclick="redirectToUpdateSeasonPage('${item.id}', '${item.tanggal_mulai}')">
                                                 <i class="mdi mdi-update"></i>
                                             </button>
-                                            <button class="text-danger" onclick="deleteSeason(${item.id})">
+                                            <button class="text-danger" onclick="deleteSeason('${item.id}', '${item.tanggal_mulai}')">
                                                 <i class="lni lni-trash-can"></i>
                                             </button>
                                         </div>    
@@ -359,10 +338,10 @@
                                     <td>${tanggalBerakhir}</td>
                                     <td>
                                         <div class="action">
-                                            <button class="text-success" onclick="redirectToUpdateSeasonPage(${item.id})">
+                                            <button class="text-success" onclick="redirectToUpdateSeasonPage('${item.id}', '${item.tanggal_mulai}')">
                                                 <i class="mdi mdi-update"></i>
                                             </button>
-                                            <button class="text-danger" onclick="deleteSeason(${item.id})">
+                                            <button class="text-danger" onclick="deleteSeason('${item.id}', '${item.tanggal_mulai}')">
                                                 <i class="lni lni-trash-can"></i>
                                             </button>
                                         </div>    
@@ -380,19 +359,39 @@
                             localStorage.clear();
                         }
                         if(err.response.status == 404 ){
-                            alert("Data tidak ditemukan")
+                            const myToast = new Toast("Data tidak ditemukan").show();
                         }
                         return Promise.reject(err);
                     });
             }
 
-            function redirectToUpdateSeasonPage(id) {
+            function redirectToUpdateSeasonPage(id, tanggalMulai) {
+                if(isTwoMonthsAhead(tanggalMulai) == false){
+                    const myToast = new Toast("Minimal 2 bulan sebelum season berlangsung").show();
+                    return;
+                }
                 params = new URLSearchParams()
                 params.append("id", id);
                 window.location.href = "season/update-season.html?" + params.toString();
             }
 
-            async function deleteSeason(id) {
+            async function deleteSeason(id, tanggalMulai) {
+                if(isTwoMonthsAhead(tanggalMulai) == false){
+                    const myToast = new Toast("Minimal 2 bulan sebelum season berlangsung").show();
+                    return;
+                }
+
+                const dialog = new ConfirmDialog({
+                    trueButtonText: "Yes",
+                    falseButtonText: "No",
+                    questionText: "Apakah anda yakin ingin menghapus season ini?"
+                });
+                const shouldDelete = await dialog.confirm();
+
+                if (!shouldDelete) {
+                    const myToast = new Toast("Batal menghapus season").show();
+                    return;
+                }
                 await axios(
                     {
                         method: "delete",
@@ -406,7 +405,8 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        alert("Berhasil hapus season");
+                        localStorage.setItem('showToast', 'true');
+                        localStorage.setItem('message', "Berhasil hapus season");
                         window.location.reload();
 
                     })

@@ -106,6 +106,17 @@
                                         </div>
                                     </div>
                                     <!-- end col -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Tarif normal</label>
+                                            <input
+                                                type="number"
+                                                placeholder="Tarif normal"
+                                                name="tarif_normal"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
 
                                     <div class="col-12">
                                         <div
@@ -166,12 +177,17 @@
                     'input[name="rincian_kamar"]'
                 ).value;
 
+                var tarif = document.querySelector(
+                    'input[name="tarif_normal"]'
+                ).value;
+
                 if (
                     namaTipe == "" ||
                     pilihanTempatTidur == "" ||
                     fasilitas == "" ||
                     deskripsi == "" ||
-                    rincianKamar == ""
+                    rincianKamar == "" ||
+                    tarif == ""
                 ) {
                     const myToast = new Toast("Mohon isi semua field").show();
                     return;
@@ -191,6 +207,7 @@
                             fasilitas: fasilitas,
                             deskripsi: deskripsi,
                             rincian_kamar: rincianKamar,
+                            tarif: Number(tarif),
                         },
                     },
                     document.body.classList.add("loading-indicator")

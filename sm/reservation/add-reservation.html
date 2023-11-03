@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="shortcut icon"
+            href="../assets/images/favicon.svg"
+            type="image/x-icon"
+        />
+        <title>Tambah season | GrandAtma</title>
+
+        <!-- ========== All CSS files linkup ========= -->
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../assets/css/lineicons.css" />
+        <link
+            rel="stylesheet"
+            href="../../assets/css/materialdesignicons.min.css"
+        />
+        <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
+    </head>
+    <body>
+        <!-- ======== Preloader =========== -->
+        <div id="preloader">
+            <div class="spinner"></div>
+        </div>
+        <!-- ======== Preloader =========== -->
+        <!-- ======== main-wrapper start =========== -->
+        <main class="auth-wrapper">
+            <section class="signin-section">
+                <div class="container-fluid">
+                    <!-- ========== title-wrapper start ========== -->
+                    <div class="title-wrapper pt-30">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="title">
+                                    <h2>Reservasi kamar</h2>
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- ========== title-wrapper end ========== -->
+
+                    <div class="signin-wrapper">
+                        <div class="form-wrapper">
+                            <form
+                                onsubmit="event.preventDefault(); addReservasi();"
+                            >
+                                <div class="row">
+                                    <div class="select-style-1">
+                                        <label>Tipe customer</label>
+                                        <div class="select-position">
+                                            <select name="tipe_customer">
+                                                <option value="">
+                                                    Pilih status
+                                                </option>
+                                                <option value="P">
+                                                    individu
+                                                </option>
+                                                <option value="grup">
+                                                    group
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Email customer</label>
+                                            <input
+                                                name="email"
+                                                type="email"
+                                                placeholder="email"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Tanggal checkin</label>
+                                            <input
+                                                id="tanggal_checkin"
+                                                type="date"
+                                                placeholder="Tanggal checkin"
+                                                name="tanggal_checkin"
+                                                disabled
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Tanggal checkout</label>
+                                            <input
+                                                id="tanggal_checkout"
+                                                type="date"
+                                                placeholder="Tanggal checkout"
+                                                name="tanggal_checkout"
+                                                disabled
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Jumlah dewasa</label>
+                                            <input
+                                                name="jumlah_dewasa"
+                                                type="number"
+                                                placeholder="jumlah dewasa"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Jumlah anak</label>
+                                            <input
+                                                name="jumlah_anak"
+                                                type="number"
+                                                placeholder="jumlah anak"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label>Nomor rekening</label>
+                                            <input
+                                                name="nomor_rekening"
+                                                type="number"
+                                                placeholder="nomor rekening"
+                                            />
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div class="select-style-1">
+                                        <label>Pilihan kasur</label>
+                                        <div class="select-position">
+                                            <select
+                                                name="pilihan_kasur"
+                                                id="pilihan_kasur"
+                                            >
+                                                <option value="">
+                                                    Pilih kasur
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- end col -->
+
+                                    <div id="dynamicFields">
+                                        <!-- Dynamic fields will be inserted here -->
+                                    </div>
+
+                                    <div
+                                        class="col-12 mb-10"
+                                        id="addFacilitiesButton"
+                                    >
+                                        <div
+                                            class="button-group d-flex justify-content-center flex-wrap"
+                                        >
+                                            <button
+                                                class="main-btn primary-btn btn-hover w-100 text-center"
+                                                type="button"
+                                                onclick="addNewField()"
+                                            >
+                                                Tambah Fasilitas berbayar
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="col-12 mb-10"
+                                        id="showPreviousButton"
+                                    >
+                                        <div
+                                            class="button-group d-flex justify-content-center flex-wrap"
+                                        >
+                                            <button
+                                                class="main-btn primary-btn btn-hover w-100 text-center"
+                                                type="button"
+                                                onclick="hideAndShowFields()"
+                                            >
+                                                Tampilkan nilai sebelumnya
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="col-12"
+                                        id="submitButton"
+                                        style="display: none"
+                                    >
+                                        <div
+                                            class="button-group d-flex justify-content-center flex-wrap"
+                                        >
+                                            <button
+                                                class="main-btn primary-btn btn-hover w-100 text-center"
+                                                type="submit"
+                                            >
+                                                Konfirmasi pesanan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- end row -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- ======== main-wrapper end =========== -->
+
+        <!-- ========= All Javascript files linkup ======== -->
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/Chart.min.js"></script>
+        <script src="../../assets/js/dynamic-pie-chart.js"></script>
+        <script src="../../assets/js/moment.min.js"></script>
+        <script src="../../assets/js/fullcalendar.js"></script>
+        <script src="../../assets/js/jvectormap.min.js"></script>
+        <script src="../../assets/js/world-merc.js"></script>
+        <script src="../../assets/js/polyfill.js"></script>
+        <script src="../../assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../../index.js"></script>
+
+        <script>
+            var params = new URLSearchParams(window.location.search);
+            var idKamar = params.get("idKamar");
+            var idTipeKamar = params.get("idTipeKamar");
+            var tarif = params.get("tarif");
+            var tanggalMulai = params.get("tanggalMulai");
+
+            var tanggalSelesai = params.get("tanggalSelesai");
+
+            let listPilihanKasur = [];
+
+            let listFasilitasTambahan = [];
+
+            let fieldCounter = 0;
+
+            let listPesananTambahanFasilitas = [];
+
+            let inputValues = {};
+            let selectValues = {};
+
+            const tTipePilihanKasurBody =
+                document.getElementById("pilihan_kasur");
+
+            window.onload = function () {
+                document.querySelector('input[name="tanggal_checkin"]').value =
+                    tanggalMulai;
+
+                document.querySelector('input[name="tanggal_checkout"]').value =
+                    tanggalSelesai;
+
+                emailValue = document.querySelector(
+                    'input[name="email"]'
+                ).value;
+                tanggalCheckinValue = document.querySelector(
+                    'input[name="tanggal_checkin"]'
+                ).value;
+
+                tanggalCheckoutValue = document.querySelector(
+                    'input[name="tanggal_checkout"]'
+                ).value;
+                jumlahDewasaValue = document.querySelector(
+                    'input[name="jumlah_dewasa"]'
+                ).value;
+                jumlahAnakValue = document.querySelector(
+                    'input[name="jumlah_anak"]'
+                ).value;
+                nomorRekeningValue = document.querySelector(
+                    'input[name="nomor_rekening"]'
+                ).value;
+                pilihanKasurValue = document.querySelector(
+                    'select[name="pilihan_kasur"]'
+                ).value;
+
+                // Menambahkan ID pada elemen p
+                document.querySelector('input[name="email"]').id = "emailValue";
+                document.querySelector('input[name="tanggal_checkin"]').id =
+                    "tanggalCheckinValue";
+                document.querySelector('input[name="tanggal_checkout"]').id =
+                    "tanggalCheckoutValue";
+                document.querySelector('input[name="jumlah_dewasa"]').id =
+                    "jumlahDewasaValue";
+                document.querySelector('input[name="jumlah_anak"]').id =
+                    "jumlahAnakValue";
+                document.querySelector('input[name="nomor_rekening"]').id =
+                    "nomorRekeningValue";
+                document.querySelector('select[name="pilihan_kasur"]').id =
+                    "pilihanKasurValue";
+
+                getPilihanKasur();
+                getFasilitasBerbayar();
+            };
+
+            async function getFasilitasBerbayar() {
+                try {
+                    const response = await axios({
+                        method: "get",
+                        url: url + "fasilitasberbayar",
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                    });
+                    document.body.classList.add("loading-indicator");
+                    const result = response.data.data;
+
+                    listFasilitasTambahan = result.map((item) => {
+                        return {
+                            id: item.id,
+                            nama_fasilitas: item.nama_fasilitas,
+                            harga: item.harga,
+                        };
+                    });
+
+                    const optionData = listFasilitasTambahan
+                        .map((item) => {
+                            return `
+                                            <option value="${item.id}" id="${item.id}">
+                                                ${item.nama_fasilitas}
+                                            </option>
+                                        `;
+                        })
+                        .join("");
+
+                    // tTipeKamarBody.innerHTML = optionData;
+                    // console.log(listFasilitasBerbayar);
+                    document.body.classList.remove("loading-indicator");
+                } catch (err) {
+                    document.body.classList.remove("loading-indicator");
+                    console.log(err);
+                    if (err.response.status == 403) {
+                        window.location.href = "../../auth/signin.html";
+                        localStorage.clear();
+                    }
+                    return Promise.reject(err);
+                }
+            }
+
+            async function getPilihanKasur() {
+                await axios(
+                    {
+                        method: "get",
+                        url: url + "tipekamar/" + Number(idTipeKamar),
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+                        pilihanKasur = result.data.data.pilihan_tempat_tidur;
+
+                        var pilihanKasur = separateString(pilihanKasur);
+
+                        listPilihanKasur = pilihanKasur;
+
+                        const optionData = listPilihanKasur
+                            .map((item) => {
+                                return `
+                                                        <option value="${item}"">
+                                                            ${item}
+                                                        </option>
+                                                    `;
+                            })
+                            .join("");
+                        tTipePilihanKasurBody.innerHTML = optionData;
+                    })
+                    .catch((err) => {
+                        document.body.classList.remove("loading-indicator");
+                        console.log(err);
+                        if (err.response.status == 403) {
+                            window.location.href = "../../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+
+            function separateString(inputString) {
+                return inputString.split("atau").map((item) => item.trim());
+            }
+
+            function hideAndShowFields() {
+                // validateFasilitasTambahan();
+                if (!validateFasilitasTambahan()) return;
+                if (!validateField()) return;
+
+                var addFacilitiesButton = document.getElementById(
+                    "addFacilitiesButton"
+                );
+                var showPreviousButton =
+                    document.getElementById("showPreviousButton");
+                var submitButton = document.getElementById("submitButton");
+
+                if (addFacilitiesButton && showPreviousButton && submitButton) {
+                    // Hide the buttons
+                    addFacilitiesButton.style.display = "none";
+                    showPreviousButton.style.display = "none";
+
+                    // Show the submit button
+                    submitButton.style.display = "block";
+
+                    // Implement your logic to show previous values
+                } else {
+                    console.error("One of the elements is not found.");
+                }
+
+                var title = document.querySelector(".title h2");
+                if (title) {
+                    title.textContent = "Resume Pemesanan";
+                } else {
+                    console.error("Title element not found.");
+                }
+
+                const form = document.querySelector("form");
+                const inputs = form.querySelectorAll("input");
+                inputs.forEach((input) => {
+                    inputValues[input.name] = input.value;
+                    const p = document.createElement("p");
+                    p.textContent = input.value;
+                    input.replaceWith(p);
+                });
+
+                const selects = form.querySelectorAll("select");
+                selects.forEach((select) => {
+                    selectValues[select.name] = select.value;
+                    const p = document.createElement("p");
+                    p.textContent = select.options[select.selectedIndex].text;
+                    select.replaceWith(p);
+                });
+
+                // Gunakan nilai-nilai yang disimpan untuk mengisikan kembali nilai setelah mengganti elemen input dan select dengan elemen `p`
+                for (const inputName in inputValues) {
+                    const pElement = document.getElementById(
+                        inputName + "Value"
+                    );
+                    if (pElement) {
+                        pElement.textContent = inputValues[inputName];
+                    }
+                }
+
+                for (const selectName in selectValues) {
+                    const pElement = document.getElementById(
+                        selectName + "Value"
+                    );
+                    if (pElement) {
+                        pElement.textContent = selectValues[selectName];
+                    }
+                }
+            }
+
+            async function addReservasi() {
+                console.log(inputValues);
+
+                //                 {
+                //     "email": "andi@gmail.com",
+                //     "tanggal_checkin": "2023-11-03",
+                //     "tanggal_checkout": "2023-11-04",
+                //     "jumlah_dewasa": "1",
+                //     "jumlah_anak": "1",
+                //     "nomor_rekening": "1",
+                //     "field_input_1": "1"
+                // }
+
+                console.log(selectValues);
+                //                 {
+                //     "tipe_customer": "P",
+                //     "pilihan_kasur": "1 doube",
+                //     "pilihan_fasilitas_tambahan_1": "1"
+                // }
+
+                try {
+                    document.body.classList.add("loading-indicator");
+
+                    fieldCounter = [...Array(fieldCounter).keys()].map(
+                        (_, index) => index + 1
+                    );
+
+                    let reservasiResponse = await axios({
+                        method: "post",
+                        url: url + "reservasi",
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                        data: {
+                            id_reservasi: selectValues.tipe_customer,
+                            email_pengguna: inputValues.email,
+                            id_kamar: Number(idKamar),
+                            tanggal_checkin: inputValues.tanggal_checkin,
+                            tanggal_checkout: inputValues.tanggal_checkout,
+                            jumlah_dewasa: Number(inputValues.jumlah_dewasa),
+                            junlah_anak: Number(inputValues.jumlah_anak),
+                            nomor_rekening: inputValues.nomor_rekening,
+                            pilihan_kasur: selectValues.pilihan_kasur,
+                        },
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+
+                    console.log(reservasiResponse.data.data.id_reservasi);
+
+                    for (const element of fieldCounter) {
+                        try {
+                            let addFasilitasResponse = await axios({
+                                method: "post",
+                                url: url + "fasilitasreservasi",
+                                headers: {
+                                    Authorization:
+                                        "Bearer " +
+                                        localStorage.getItem("token"),
+                                },
+                                data: {
+                                    id_reservasi:
+                                        reservasiResponse.data.data
+                                            .id_reservasi,
+                                    id_fasilitas_berbayar: Number(
+                                        selectValues[
+                                            `pilihan_fasilitas_tambahan_${element}`
+                                        ]
+                                    ),
+                                    jumlah_unit: Number(
+                                        inputValues[`field_input_${element}`]
+                                    ),
+                                },
+                            }).then((result) => {
+                                console.log(result);
+                                document.body.classList.remove(
+                                    "loading-indicator"
+                                );
+
+                                localStorage.setItem("showToast", "true");
+                                localStorage.setItem(
+                                    "message",
+                                    "Berhasil reservasi kamar"
+                                );
+                                window.location.href = "../index.html";
+                            });
+                        } catch (error) {
+                            console.log(error);
+                            if (error.response.status == 403) {
+                                window.location.href = "../../auth/signin.html";
+                                localStorage.clear();
+                            }
+                        }
+                    }
+
+                    // fieldCounter.forEach(element =>  {
+                    //     let addFasilitasResponse = await axios({
+                    //     method: "post",
+                    //     url: url + "fasilitasreservasi",
+                    //     headers: {
+                    //         Authorization:
+                    //             "Bearer " + localStorage.getItem("token"),
+                    //     },
+                    //     data: {
+                    //         id_reservasi: reservasiResponse.data.data.id_reservasi,
+                    //         id_fasilitas_berbayar:
+                    //             Number(pilihan_fasilitas_tambahan_$element),
+                    //         jumlah_unit: Number(inputValues.field_input_1),
+                    //     },
+                    // });
+                    // });
+                } catch (error) {
+                    document.body.classList.remove("loading-indicator");
+                    console.error(error);
+
+                    if (error.response.status == 403) {
+                        window.location.href = "../../auth/signin.html";
+                        localStorage.clear();
+                    }
+                }
+            }
+
+            function validateField() {
+                mailValue = document.querySelector('input[name="email"]').value;
+                tanggalCheckinValue = document.querySelector(
+                    'input[name="tanggal_checkin"]'
+                ).value;
+                tanggalCheckoutValue = document.querySelector(
+                    'input[name="tanggal_checkout"]'
+                ).value;
+                jumlahDewasaValue = document.querySelector(
+                    'input[name="jumlah_dewasa"]'
+                ).value;
+                jumlahAnakValue = document.querySelector(
+                    'input[name="jumlah_anak"]'
+                ).value;
+                nomorRekeningValue = document.querySelector(
+                    'input[name="nomor_rekening"]'
+                ).value;
+                tipeCustomerValue = document.querySelector(
+                    'select[name="tipe_customer"]'
+                ).selectedOptions[0].value;
+                pilihanKasurValue = document.querySelector(
+                    'select[name="pilihan_kasur"]'
+                ).selectedOptions[0].value;
+
+                if (
+                    mailValue == "" ||
+                    tanggalCheckinValue == "" ||
+                    tanggalCheckoutValue == "" ||
+                    jumlahDewasaValue == "" ||
+                    jumlahAnakValue == "" ||
+                    nomorRekeningValue == "" ||
+                    tipeCustomerValue == "" ||
+                    pilihanKasurValue == ""
+                ) {
+                    const myToast = new Toast("Mohon isi semua field").show();
+                    return false;
+                }
+                return true;
+            }
+
+            function validateFasilitasTambahan() {
+                if (fieldCounter > 0) {
+                    for (let i = 1; i <= fieldCounter; i++) {
+                        var fasilitasValue = document.querySelector(
+                            `select[name="pilihan_fasilitas_tambahan_${i}"]`
+                        ).value;
+                        var inputFieldValue = document.querySelector(
+                            `input[name="field_input_${i}"]`
+                        ).value;
+
+                        if (fasilitasValue === "" || inputFieldValue === "") {
+                            const myToast = new Toast(
+                                "Mohon isi semua field"
+                            ).show();
+                            return false;
+                        }
+
+                        listPesananTambahanFasilitas.push({
+                            fasilitas: fasilitasValue,
+                            input: inputFieldValue,
+                        });
+                        // Use the values as required
+                        console.log(listPesananTambahanFasilitas);
+                    }
+                }
+
+                return true;
+            }
+
+            function addNewField() {
+                const dynamicFields = document.getElementById("dynamicFields");
+
+                // Menambahkan dropdown
+                const newDropdown = document.createElement("div");
+                newDropdown.innerHTML = `
+                                <div class="select-style-1">
+                                    <label>Pilihan fasilitas tambahan ${
+                                        fieldCounter + 1
+                                    }</label>
+                                    <div class="select-position">
+                                        <select name="pilihan_fasilitas_tambahan_${
+                                            fieldCounter + 1
+                                        }" id="pilihan_fasilitas_tambahan_${
+                    fieldCounter + 1
+                }">
+                                            <option value="">Pilih fasilitas</option>
+                                            ${listFasilitasTambahan
+                                                .map(
+                                                    (item) =>
+                                                        `<option value="${item.id}">${item.nama_fasilitas}</option>`
+                                                )
+                                                .join("")}
+                                        </select>
+                                    </div>
+                                </div>
+                            `;
+                dynamicFields.appendChild(newDropdown);
+
+                // Menambahkan input
+                const newInput = document.createElement("div");
+                newInput.innerHTML = `
+                                <div class="col-12">
+                                    <div class="input-style-1">
+                                        <label>Jumlah unit fasilitas tambahan ${
+                                            fieldCounter + 1
+                                        }</label>
+                                        <input name="field_input_${
+                                            fieldCounter + 1
+                                        }" type="text" placeholder="Jumlah unit fasilitas tambahan ${
+                    fieldCounter + 1
+                }" />
+                                    </div>
+                                </div>
+                            `;
+                dynamicFields.appendChild(newInput);
+
+                fieldCounter++;
+            }
+        </script>
+    </body>
+</html>

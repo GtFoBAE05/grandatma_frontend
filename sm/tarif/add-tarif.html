@@ -194,6 +194,10 @@
                         tipeSeason.forEach((element) => {
                             listSeason.push(element);
                         });
+                        let nameToRemove = "default";
+                        listSeason = listSeason.filter(
+                            (item) => item.nama_season !== nameToRemove
+                        );
                         const optionData = listSeason
                             .map((item) => {
                                 return `

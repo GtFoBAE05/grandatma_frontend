@@ -12,6 +12,15 @@ function formattedDate(inputDate) {
     return `${day < 10 ? "0" : ""}${day}-${month}-${year} ${hour}:${minutes}`;
 }
 
+function formattedDateWithoutTime(inputDate) {
+    const date = new Date(inputDate);
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+
+    return `${day < 10 ? "0" : ""}${day}-${month}-${year}`;
+}
+
 function isTwoMonthsAhead(dateString) {
     const inputDate = new Date(dateString);
     const currentDate = new Date();

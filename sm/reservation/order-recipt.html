@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="shortcut icon"
+            href="../../assets/images/favicon.svg"
+            type="image/x-icon"
+        />
+        <title>Order recipt | GrandAtma</title>
+
+        <!-- ========== All CSS files linkup ========= -->
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../assets/css/lineicons.css" />
+        <link
+            rel="stylesheet"
+            href="../../assets/css/materialdesignicons.min.css"
+        />
+        <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
+    </head>
+    <body>
+        <!-- ======== Preloader =========== -->
+        <div id="preloader">
+            <div class="spinner"></div>
+        </div>
+        <!-- ======== Preloader =========== -->
+
+        <!-- ======== main-wrapper start =========== -->
+        <main class="auth-wrapper">
+            <div class="container-fluid">
+                <!-- Invoice Wrapper Start -->
+                <div class="invoice-wrapper">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="invoice-card card-style m-5">
+                                <div class="invoice-header">
+                                    <div class="invoice-for">
+                                        <h2 class="mb-10">
+                                            Tanda terima pesanan
+                                        </h2>
+                                        <p class="text-sm">GrandAtma Hotels</p>
+                                    </div>
+                                    <div class="">
+                                        <img
+                                            src="../../assets/images/logo/grandatmalogo.jpg"
+                                            alt=""
+                                        />
+                                    </div>
+                                    <div class="invoice-date">
+                                        <p id="tanggal">
+                                            <span>Tanggal:</span>
+                                            20/02/2024
+                                        </p>
+                                        <p id="noInvoice">
+                                            <span>No invoice:</span> 20/02/2028
+                                        </p>
+                                        <p id="staff">
+                                            <span>Front office:</span> #5467
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="invoice-address">
+                                    <div class="address-item">
+                                        <p class="text-bold">ID Booking:</p>
+                                        <p class="text-bold">Nama:</p>
+                                        <p class="text-bold">Alamat:</p>
+                                    </div>
+                                    <div class="address-item">
+                                        <p id="idBooking">P150123-141</p>
+                                        <p id="nama">Daenerys Targaryen</p>
+                                        <p id="alamat">
+                                            "Dragonstone Castle, Westeros
+                                        </p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <h1>Detail</h1>
+                                <div class="invoice-address">
+                                    <div class="address-item">
+                                        <p class="text-bold">Check In:</p>
+                                        <p class="text-bold">Check Out:</p>
+                                        <p class="text-bold">Dewasa:</p>
+                                        <p class="text-bold">Anak:</p>
+                                    </div>
+                                    <div class="address-item">
+                                        <p id="checkin">29 Jan 2023</p>
+                                        <p id="checkout">30 Jan 2023</p>
+                                        <p id="dewasa">5</p>
+                                        <p id="anak">0</p>
+                                    </div>
+                                </div>
+                                <hr />
+                                <h1>Kamar</h1>
+                                <div class="table-responsive">
+                                    <table class="invoice-table table">
+                                        <thead>
+                                            <tr>
+                                                <th class="service">
+                                                    <h6
+                                                        class="text-sm text-medium"
+                                                    >
+                                                        Jenis kamar
+                                                    </h6>
+                                                </th>
+                                                <th class="desc">
+                                                    <h6
+                                                        class="text-sm text-medium"
+                                                    >
+                                                        Bed
+                                                    </h6>
+                                                </th>
+                                                <th class="qty">
+                                                    <h6
+                                                        class="text-sm text-medium"
+                                                    >
+                                                        Jumlah
+                                                    </h6>
+                                                </th>
+                                                <th class="amount">
+                                                    <h6
+                                                        class="text-sm text-medium"
+                                                    >
+                                                        Harga
+                                                    </h6>
+                                                </th>
+                                                <th class="amount">
+                                                    <h6
+                                                        class="text-sm text-medium"
+                                                    >
+                                                        Sub total
+                                                    </h6>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <p
+                                                        class="text-sm"
+                                                        id="namaTipeKamar"
+                                                    >
+                                                        Superior
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p
+                                                        class="text-sm"
+                                                        id="pilihanKasur"
+                                                    >
+                                                        Twin
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p
+                                                        class="text-sm"
+                                                        id="lamaHari"
+                                                    >
+                                                        1
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p
+                                                        class="text-sm"
+                                                        id="nominalKamar"
+                                                    >
+                                                        Rp400000
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <p
+                                                        class="text-sm"
+                                                        id="tarifKamar"
+                                                    >
+                                                        Rp400000
+                                                    </p>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <h4 id="totalHargaKamar">
+                                                        $3135
+                                                    </h4>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="invoice-note">
+                                        <p class="text-sm" >
+                                            <span class="text-bold"
+                                                >Fasilitas tambahan:</span
+                                            >
+                                            <ul id="fasilitasTambahan">
+
+                                            </ul>
+                                        </p>
+                                </div>
+                                <!-- <div
+                                    class="note-wrapper warning-alert py-4 px-sm-3 px-lg-5"
+                                >
+                                    <div class="alert">
+                                        <h5 class="text-bold mb-15">Notes:</h5>
+                                        <p class="text-sm text-gray">
+                                            All accounts are to be paid within 7
+                                            days from receipt of invoice. To be
+                                            paid by cheque or credit card or
+                                            direct payment online. If account is
+                                            not paid within 7 days the credits
+                                            details supplied as confirmation of
+                                            work undertaken will be charged the
+                                            agreed quoted fee noted above.
+                                        </p>
+                                    </div>
+                                </div> -->
+                                <div class="invoice-action">
+                                    <ul
+                                        class="d-flex flex-wrap align-items-center justify-content-center"
+                                    >
+                                        <li class="m-2">
+                                            <a
+                                                href="../index.html"
+                                                class="main-btn primary-btn-outline btn-hover"
+                                            >
+                                                Beranda
+                                            </a>
+                                        </li>
+                                        <!-- <li class="m-2">
+                                            <a
+                                                href="#0"
+                                                class="main-btn primary-btn btn-hover"
+                                            >
+                                                Send Invoice
+                                            </a>
+                                        </li> -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                        <!-- ENd Col -->
+                    </div>
+                    <!-- End Row -->
+                </div>
+                <!-- Invoice Wrapper End -->
+            </div>
+            <!-- end col -->
+        </main>
+        <!-- ======== main-wrapper end =========== -->
+
+        <!-- ========= All Javascript files linkup ======== -->
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/Chart.min.js"></script>
+        <script src="../../assets/js/dynamic-pie-chart.js"></script>
+        <script src="../../assets/js/moment.min.js"></script>
+        <script src="../../assets/js/fullcalendar.js"></script>
+        <script src="../../assets/js/jvectormap.min.js"></script>
+        <script src="../../assets/js/world-merc.js"></script>
+        <script src="../../assets/js/polyfill.js"></script>
+        <script src="../../assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../../index.js"></script>
+
+        <script>
+            // var params = new URLSearchParams(window.location.search);
+            // var id = params.get("id_transaksi");
+            var id = ""
+
+            const tKamarBody = document.getElementById("kamar");
+            const tFasilitasBody = document.getElementById("fasilitas");
+
+            window.onload = function() {
+                id = localStorage.getItem('idReservasi');
+
+                const showToast = localStorage.getItem('showToast');
+                if (showToast === 'true') {
+                    let pesan = localStorage.getItem('message');
+                    const myToast = new Toast(pesan).show();
+                    localStorage.setItem('showToast', 'false');
+                    localStorage.setItem('message', '');
+                }
+                getTransactionDetail();
+            };
+
+
+            async function getTransactionDetail() {
+                await axios(
+                    {
+                        method: "get",
+                        url: url + "transaksidetail/" + id,
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+
+                        console.log(result.data.data);
+
+                        tanggalBayar = formattedDateWithoutTime(
+                            result.data.data.TanggalTransaksi
+                        );
+                        tanggalCheckin = formattedDateWithoutTime(
+                            result.data.data.TanggalCheckin
+                        );
+                        tanggalCheckout = formattedDateWithoutTime(
+                            result.data.data.TanggalCheckout
+                        );
+
+                        //top
+                        document.getElementById("tanggal").innerHTML =
+                            "Tanggal: " + tanggalBayar;
+                        document.getElementById("noInvoice").innerHTML =
+                            "No invoidce: " + id;
+                        document.getElementById("staff").innerHTML =
+                            "Front office: SM";
+
+                        //mid
+                        document.getElementById("idBooking").innerHTML = id;
+                        document.getElementById("nama").innerHTML =
+                            result.data.user.nama;
+                        document.getElementById("alamat").innerHTML =
+                            result.data.user.alamat;
+
+                        //detail
+                        document.getElementById("checkin").innerHTML =
+                            tanggalCheckin;
+                        document.getElementById("checkout").innerHTML =
+                            tanggalCheckout;
+                        document.getElementById("dewasa").innerHTML =
+                            result.data.data.JumlahDewasa;
+                        document.getElementById("anak").innerHTML =
+                            result.data.data.JumlahAnak;
+
+                        //kamar
+                        document.getElementById("namaTipeKamar").innerHTML =
+                            result.data.data.TipeKamar;
+                        document.getElementById("pilihanKasur").innerHTML =
+                            result.data.data.PilihanKasur;
+                        document.getElementById("lamaHari").innerHTML =
+                            result.data.days;
+                        document.getElementById("nominalKamar").innerHTML =
+                            "Rp" + result.data.tarif;
+                        document.getElementById("tarifKamar").innerHTML =
+                            "Rp" + result.data.tarif * result.data.days;
+
+                        //total
+                        document.getElementById("totalHargaKamar").innerHTML =
+                            "Rp" + result.data.tarif * result.data.days;
+
+                        //permintaan khusus
+                        const fasilitasTambahanUl = document.getElementById('fasilitasTambahan');
+                        result.data.fasilitas.forEach(element => {
+                            const li = document.createElement('li');
+                            li.textContent = element.JumlahUnit + " " + element.NamaFasilitas;
+                            fasilitasTambahanUl.appendChild(li);
+
+                        });
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        document.body.classList.remove("loading-indicator");
+                        if (err.response.status == 403) {
+                            window.location.href = "../../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+        </script>
+    </body>
+</html>

@@ -9,7 +9,7 @@
             href="../assets/images/favicon.svg"
             type="image/x-icon"
         />
-        <title>Tambah season | GrandAtma</title>
+        <title>Reservasi kamar | GrandAtma</title>
 
         <!-- ========== All CSS files linkup ========= -->
         <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
@@ -51,36 +51,6 @@
                                 onsubmit="event.preventDefault(); addReservasi();"
                             >
                                 <div class="row">
-                                    <div class="select-style-1">
-                                        <label>Tipe customer</label>
-                                        <div class="select-position">
-                                            <select name="tipe_customer">
-                                                <option value="">
-                                                    Pilih status
-                                                </option>
-                                                <option value="P">
-                                                    individu
-                                                </option>
-                                                <option value="grup">
-                                                    group
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- end col -->
-
-                                    <div class="col-12">
-                                        <div class="input-style-1">
-                                            <label>Email customer</label>
-                                            <input
-                                                name="email"
-                                                type="email"
-                                                placeholder="email"
-                                            />
-                                        </div>
-                                    </div>
-                                    <!-- end col -->
-
                                     <div class="col-12">
                                         <div class="input-style-1">
                                             <label>Tanggal checkin</label>
@@ -267,9 +237,6 @@
                 document.querySelector('input[name="tanggal_checkout"]').value =
                     tanggalSelesai;
 
-                emailValue = document.querySelector(
-                    'input[name="email"]'
-                ).value;
                 tanggalCheckinValue = document.querySelector(
                     'input[name="tanggal_checkin"]'
                 ).value;
@@ -291,7 +258,6 @@
                 ).value;
 
                 // Menambahkan ID pada elemen p
-                document.querySelector('input[name="email"]').id = "emailValue";
                 document.querySelector('input[name="tanggal_checkin"]').id =
                     "tanggalCheckinValue";
                 document.querySelector('input[name="tanggal_checkout"]').id =
@@ -498,14 +464,12 @@
 
                     let reservasiResponse = await axios({
                         method: "post",
-                        url: url + "reservasi",
+                        url: url + "personal/reservasi",
                         headers: {
                             Authorization:
                                 "Bearer " + localStorage.getItem("token"),
                         },
                         data: {
-                            id_reservasi: selectValues.tipe_customer,
-                            email_pengguna: inputValues.email,
                             id_kamar: Number(idKamar),
                             tanggal_checkin: inputValues.tanggal_checkin,
                             tanggal_checkout: inputValues.tanggal_checkout,
@@ -613,7 +577,6 @@
             }
 
             function validateField() {
-                mailValue = document.querySelector('input[name="email"]').value;
                 tanggalCheckinValue = document.querySelector(
                     'input[name="tanggal_checkin"]'
                 ).value;
@@ -629,21 +592,16 @@
                 nomorRekeningValue = document.querySelector(
                     'input[name="nomor_rekening"]'
                 ).value;
-                tipeCustomerValue = document.querySelector(
-                    'select[name="tipe_customer"]'
-                ).selectedOptions[0].value;
                 pilihanKasurValue = document.querySelector(
                     'select[name="pilihan_kasur"]'
                 ).selectedOptions[0].value;
 
                 if (
-                    mailValue == "" ||
                     tanggalCheckinValue == "" ||
                     tanggalCheckoutValue == "" ||
                     jumlahDewasaValue == "" ||
                     jumlahAnakValue == "" ||
                     nomorRekeningValue == "" ||
-                    tipeCustomerValue == "" ||
                     pilihanKasurValue == ""
                 ) {
                     const myToast = new Toast("Mohon isi semua field").show();

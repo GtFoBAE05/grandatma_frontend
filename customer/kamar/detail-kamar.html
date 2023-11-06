@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="shortcut icon"
+            href="../../assets/images/favicon.svg"
+            type="image/x-icon"
+        />
+        <title>Detail kamar | GrandAtma</title>
+
+        <!-- ========== All CSS files linkup ========= -->
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../assets/css/lineicons.css" />
+        <link
+            rel="stylesheet"
+            href="../../assets/css/materialdesignicons.min.css"
+        />
+        <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
+    </head>
+    <body>
+        <!-- ======== Preloader =========== -->
+        <div id="preloader">
+            <div class="spinner"></div>
+        </div>
+        <!-- ======== Preloader =========== -->
+        <main class="auth-wrapper">
+            <div class="container-fluid">
+                <div class="card-style settings-card-1 mt-30 mb-30">
+                    <div
+                        class="title mb-30 d-flex justify-content-between align-items-center"
+                    >
+                        <h6>Detail kamar</h6>
+
+                        <button
+                            class="main-btn primary-btn-light rounded-full btn-hover"
+                            onclick="redirectToReservationPage()"
+                        >
+                            Pesan kamar
+                        </button>
+                    </div>
+
+                    <div class="input-style-1">
+                        <label>Nama tipe</label>
+                        <input
+                            type="text"
+                            placeholder="admin@example.com"
+                            value="nama tipe"
+                            name="nama_tipe"
+                            disabled
+                        />
+                    </div>
+                    <div class="input-style-1">
+                        <label>Pilihan tempat tidur</label>
+                        <input
+                            type="text"
+                            placeholder="admin@example.com"
+                            value="pilihan tempat tidur"
+                            name="pilihan_tempat_tidur"
+                            disabled
+                        />
+                    </div>
+                    <div class="input-style-1">
+                        <label>fasilitas</label>
+                        <input
+                            type="text"
+                            placeholder="admin@example.com"
+                            value="fasilitas"
+                            name="fasilitas"
+                            disabled
+                        />
+                    </div>
+                    <div class="input-style-1">
+                        <label>deskripsi</label>
+                        <input
+                            type="text"
+                            placeholder="admin@example.com"
+                            value="deskripsi"
+                            name="deskripsi"
+                            disabled
+                        />
+                    </div>
+                    <div class="input-style-1">
+                        <label>Rincian kamar</label>
+                        <input
+                            type="text"
+                            placeholder="admin@example.com"
+                            value="rincian kamar"
+                            name="rincian_kamar"
+                            disabled
+                        />
+                    </div>
+                </div>
+                <!-- end card -->
+            </div>
+            <!-- end col -->
+        </main>
+        <!-- ======== main-wrapper end =========== -->
+
+        <!-- ========= All Javascript files linkup ======== -->
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/Chart.min.js"></script>
+        <script src="../../assets/js/dynamic-pie-chart.js"></script>
+        <script src="../../assets/js/moment.min.js"></script>
+        <script src="../../assets/js/fullcalendar.js"></script>
+        <script src="../../assets/js/jvectormap.min.js"></script>
+        <script src="../../assets/js/world-merc.js"></script>
+        <script src="../../assets/js/polyfill.js"></script>
+        <script src="../../assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../../index.js"></script>
+
+        <script>
+            var params = new URLSearchParams(window.location.search);
+            var idKamar = params.get("idKamar");
+            var idTipeKamar = params.get("idTipeKamar");
+            var tarif = params.get("tarif");
+            var tanggalMulai = params.get("tanggalMulai");
+            var tanggalSelesai = params.get("tanggalSelesai");
+
+            window.onload = getDetailTipeKamar();
+
+            async function getDetailTipeKamar() {
+                await axios(
+                    {
+                        method: "get",
+                        url: url + "tipekamar/" + Number(idTipeKamar),
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+
+                        document.querySelector(
+                            'input[name="nama_tipe"]'
+                        ).value = result.data.data.nama_tipe;
+
+                        document.querySelector(
+                            'input[name="pilihan_tempat_tidur"]'
+                        ).value = result.data.data.pilihan_tempat_tidur;
+
+                        document.querySelector(
+                            'input[name="fasilitas"]'
+                        ).value = result.data.data.fasilitas;
+
+                        document.querySelector(
+                            'input[name="deskripsi"]'
+                        ).value = result.data.data.deskripsi;
+
+                        document.querySelector(
+                            'input[name="rincian_kamar"]'
+                        ).value = result.data.data.rincian_kamar;
+                    })
+                    .catch((err) => {
+                        document.body.classList.remove("loading-indicator");
+                        alert(err.response.data.message);
+                        if (err.response.status == 403) {
+                            window.location.href = "../../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+
+            async function updateFasilitasBerbayar() {
+                var nama = document.querySelector(
+                    'input[name="nama_fasilitas_berbayar"]'
+                ).value;
+                var harga = document.getElementById("harga").value;
+
+                if (nama == "" || harga == "") {
+                    const myToast = new Toast("Mohon isi semua field").show();
+                    return;
+                }
+
+                await axios(
+                    {
+                        method: "put",
+                        url: url + "fasilitasberbayar/" + id,
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                        data: {
+                            nama_fasilitas: nama,
+                            harga: Number(harga),
+                        },
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+                        localStorage.setItem("showToast", "true");
+                        localStorage.setItem(
+                            "message",
+                            "Berhasil update fasilits berbayar"
+                        );
+                        window.location.href = "./fasilitas-berbayar.html";
+                    })
+                    .catch((err) => {
+                        document.body.classList.remove("loading-indicator");
+
+                        alert(err.response.data.message);
+                        if (err.response.status == 403) {
+                            window.location.href = "../../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+
+            function redirectToReservationPage() {
+                params = new URLSearchParams();
+                params.append("idKamar", idKamar);
+                params.append("idTipeKamar", idTipeKamar);
+                params.append("tarif", tarif);
+                params.append("tanggalMulai", tanggalMulai);
+                params.append("tanggalSelesai", tanggalSelesai);
+                window.location.href =
+                    "../reservation/add-reservation.html?" + params.toString();
+            }
+        </script>
+    </body>
+</html>

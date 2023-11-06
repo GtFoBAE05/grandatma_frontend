@@ -6,22 +6,21 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link
             rel="shortcut icon"
-            href="../assets/images/favicon.svg"
+            href="../../assets/images/favicon.svg"
             type="image/x-icon"
         />
-        <title>Customer | PlainAdmin Demo</title>
+        <title>Cek Tarif | Grandatma</title>
 
         <!-- ========== All CSS files linkup ========= -->
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="../assets/css/lineicons.css" />
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../assets/css/lineicons.css" />
         <link
             rel="stylesheet"
-            href="../assets/css/materialdesignicons.min.css"
+            href="../../assets/css/materialdesignicons.min.css"
         />
-        <link rel="stylesheet" href="../assets/css/fullcalendar.css" />
-        <link rel="stylesheet" href="../assets/css/main.css" />
+        <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
     </head>
-
     <body>
         <!-- ======== Preloader =========== -->
         <div id="preloader">
@@ -31,11 +30,10 @@
 
         <!-- ======== sidebar-nav start =========== -->
         <aside class="sidebar-nav-wrapper">
-            
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="nav-item active">
-                        <a href="index.html">
+                    <li class="nav-item ">
+                        <a href="../index.html">
                             <span class="icon">
                                 <svg
                                     width="20"
@@ -59,8 +57,8 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="./kamar/cek-tarif.html">
+                    <li class="nav-item active">
+                        <a href="./cek-tarif.html">
                             <span class="icon">
                                 <svg
                                     width="20"
@@ -84,7 +82,7 @@
                         </a>
                     </li>
                     <li class="nav-item ">
-                        <a href="/customer/jaminan/jaminan.html">
+                        <a href="../jaminan/jaminan.html">
                             <span class="icon">
                                 <svg
                                     width="20"
@@ -107,8 +105,9 @@
                             <span class="text">Bayar jaminan</span>
                         </a>
                     </li>
+                    
                     <li class="nav-item ">
-                        <a href="/customer/cancel-order/cancel-order.html">
+                        <a href="../cancel-order/cancel-order.html">
                             <span class="icon">
                                 <svg
                                     width="20"
@@ -132,7 +131,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="profile/profile.html">
+                        <a href="../profile/profile.html">
                             <span class="icon">
                                 <svg
                                     width="20"
@@ -155,9 +154,7 @@
                             <span class="text">Profile</span>
                         </a>
                     </li>
-                    <span class="divider">
-                        <hr />
-                    </span>
+                    <span class="divider"><hr /></span>
                 </ul>
             </nav>
         </aside>
@@ -166,6 +163,37 @@
 
         <!-- ======== main-wrapper start =========== -->
         <main class="main-wrapper">
+            <!-- ========== header start ========== -->
+            <header class="header">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-5 col-6">
+                            <div class="header-left d-flex align-items-center">
+                                <form
+                                    onsubmit="event.preventDefault(); getTarifByDate();"
+                                >
+                                    <input
+                                        type="date"
+                                        id="tanggal_mulai"
+                                        name="tanggal_mulai"
+                                        placeholder="Tanggal Mulai"
+                                    />
+                                    <input
+                                        type="date"
+                                        id="tanggal_selesai"
+                                        name="tanggal_selesai"
+                                        placeholder="Tanggal Selesai"
+                                    />
+                                    <button type="submit">Cari</button>
+                                </form>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- ========== header end ========== -->
+
 
             <!-- ========== table components start ========== -->
             <section class="table-components">
@@ -175,7 +203,7 @@
                         <div class="row align-items-center">
                             <div class="col-md-6">
                                 <div class="title">
-                                    <h2>Riwayat transaksi</h2>
+                                    <h2>Kamar tersedia</h2>
 
                                 </div>
                             </div>
@@ -201,14 +229,18 @@
                                                     <h6>Nomor</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Total pembayaran</h6>
+                                                    <h6>Tipe kamar</h6>
                                                 </th>
                                                 <th>
-                                                    <h6>Tanggal transaksi</h6>
+                                                    <h6>Nomor kamar</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Tarif</h6>
                                                 </th>
                                                 <th>
                                                     <h6>Action</h6>
                                                 </th>
+
                                             </tr>
                                             <!-- end table row-->
                                         </thead>
@@ -230,44 +262,51 @@
             </section>
             <!-- ========== table components end ========== -->
 
-            
         </main>
         <!-- ======== main-wrapper end =========== -->
 
         <!-- ========= All Javascript files linkup ======== -->
-        <script src="../assets/js/bootstrap.bundle.min.js"></script>
-        <script src="../assets/js/Chart.min.js"></script>
-        <script src="../assets/js/dynamic-pie-chart.js"></script>
-        <script src="../assets/js/moment.min.js"></script>
-        <script src="../assets/js/fullcalendar.js"></script>
-        <script src="../assets/js/jvectormap.min.js"></script>
-        <script src="../assets/js/world-merc.js"></script>
-        <script src="../assets/js/polyfill.js"></script>
-        <script src="../assets/js/main.js"></script>
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/Chart.min.js"></script>
+        <script src="../../assets/js/dynamic-pie-chart.js"></script>
+        <script src="../../assets/js/moment.min.js"></script>
+        <script src="../../assets/js/fullcalendar.js"></script>
+        <script src="../../assets/js/jvectormap.min.js"></script>
+        <script src="../../assets/js/world-merc.js"></script>
+        <script src="../../assets/js/polyfill.js"></script>
+        <script src="../../assets/js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="../index.js"></script>
+        <script src="../../index.js"></script>
 
         <script>
+            let listKamar = [];
 
-            let listTransaksi = [];
             const tBody = document.querySelector('tbody');
-            window.onload = function() {
-                const showToast = localStorage.getItem('showToast');
-                if (showToast === 'true') {
-                    let pesan = localStorage.getItem('message');
-                    const myToast = new Toast(pesan).show();
-                    localStorage.setItem('showToast', 'false');
-                    localStorage.setItem('message', '');
-                }
-                getTransaksi();
-            };
 
-            async function getTransaksi() {
+
+            async function getTarifByDate() {
+                var tanggalMulai = document.getElementById("tanggal_mulai").value;
+                var tanggalSelesai = document.getElementById("tanggal_selesai").value;
+
+                if(tanggalMulai === "" ){
+                    const myToast = new Toast("Tanggal mulai tidak boleh kosong").show();
+                    return;
+                }
+                if(tanggalSelesai === ""){
+                    const myToast = new Toast("Tanggal selesai tidak boleh kosong").show();
+                    return;
+                }
+
+                if (tanggalMulai > tanggalSelesai) {
+                    const myToast = new Toast("Tanggal selesai ada sebelum tanggal mulai.").show();
+                    return;
+                } 
+
 
                 await axios(
                     {
                         method: "get",
-                        url: url + "transaksihistory",
+                        url: url + "kamar/avail?tanggal_mulai="+tanggalMulai+"&tanggal_selesai="+tanggalSelesai,
                         headers: {
                             Authorization : "Bearer " + localStorage.getItem("token")
                         }
@@ -276,25 +315,25 @@
                 )
                     .then((result) => {
                         document.body.classList.remove("loading-indicator");
-                        listTransaksi = []
-                        transaksi = result.data.data;
-                        transaksi.forEach(element => {
-                            listTransaksi.push(element);
+                        listKamar = []
+                        kamar = result.data.data;
+                        kamar.forEach(element => {
+                            console.log(element);
+                            listKamar.push(element);
 
                         });
-                        const tableData = listTransaksi.map((item, index) => {
-                            tanggalTransaksi = formattedDateWithoutTime(item.tanggal_transaksi)
+                        const tableData = listKamar.map((item, index) => {
                             return `
                                 <tr>
                                     <td>${index+1}</td>
-                                    <td>${item.total_pembayaran}</td>
-                                    <td>${tanggalTransaksi}</td>
+                                    <td>${item.NamaTipe}</td>
+                                    <td>${item.NomorKamar}</td>
+                                    <td>${item.Tarif}</td>
                                     <td>
                                         <div class="action">
-                                            <button class="text-success" onclick='redirectToTransactionDetail("${item.id_reservasi}")'>
-                                                <i class="mdi mdi-card-account-details"></i>
+                                            <button class="text-success" onclick="redirectToUpdatePage(${item.Id}, ${item.IdTipeKamar}, ${item.Tarif})">
+                                                <i class="mdi mdi-update"></i>
                                             </button>
-                                            
                                         </div>    
                                     </td>
                                 </tr>
@@ -305,23 +344,25 @@
                     })
                     .catch((err) => {
                         document.body.classList.remove("loading-indicator");
+                        console.log(err)
                         if(err.response.status == 403 ){
                             window.location.href = "../../auth/signin.html";
                             localStorage.clear();
-                        }
-                        if(err.response.status == 404 ){
-                            const myToast = new Toast("Data tidak ditemukan").show();
                         }
                         return Promise.reject(err);
                     });
             }
 
-            function redirectToTransactionDetail(id_reservasi) {
-                const params = new URLSearchParams();
-                params.append("id_transaksi", id_reservasi);
-                window.location.href = "./transaction/transaction-detail.html?" + params.toString();
-            };
+            function redirectToUpdatePage(idKamar, idTipeKamar, tarif) {
 
+                params = new URLSearchParams()
+                params.append("idKamar", idKamar);
+                params.append("idTipeKamar", idTipeKamar);
+                params.append("tarif", tarif);
+                params.append("tanggalMulai", document.getElementById("tanggal_mulai").value);
+                params.append("tanggalSelesai", document.getElementById("tanggal_selesai").value);
+                window.location.href = "./detail-kamar.html?" + params.toString();
+            }
 
         </script>
     </body>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="shortcut icon"
+            href="../../assets/images/favicon.svg"
+            type="image/x-icon"
+        />
+        <title>Transaction detail | GrandAtma</title>
+
+        <!-- ========== All CSS files linkup ========= -->
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../assets/css/lineicons.css" />
+        <link
+            rel="stylesheet"
+            href="../../assets/css/materialdesignicons.min.css"
+        />
+        <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
+    </head>
+    <body>
+        <!-- ======== Preloader =========== -->
+        <div id="preloader">
+            <div class="spinner"></div>
+        </div>
+        <!-- ======== Preloader =========== -->
+
+        <!-- ======== main-wrapper start =========== -->
+        <main class="auth-wrapper">
+            <div class="container-fluid">
+                <div class="card-style settings-card-1 mt-30 mb-30">
+                    <form onsubmit="event.preventDefault(); updateDeposit();">
+                        <div
+                            class="title mb-30 d-flex justify-content-between align-items-center"
+                        >
+                            <h6>Detail transaksi</h6>
+                        </div>
+
+                        <div class="input-style-1">
+                            <label>Id reservasi</label>
+                            <input
+                                type="text"
+                                placeholder="admin@example.com"
+                                value="id reservasi"
+                                name="id_reservasi"
+                                disabled
+                            />
+                        </div>
+                        <div class="input-style-1">
+                            <label>Tanggal pesan</label>
+                            <input
+                                type="text"
+                                placeholder="admin@example.com"
+                                value="tanggal"
+                                name="tanggal_transaksi"
+                                disabled
+                            />
+                        </div>
+                        <div class="input-style-1">
+                            <label>Total pembayaran</label>
+                            <input
+                                type="text"
+                                placeholder="admin@example.com"
+                                value="total pembayaran"
+                                name="total_pembayaran"
+                                disabled
+                            />
+                        </div>
+                        <div class="input-style-1">
+                            <label>Nomor kamar</label>
+                            <input
+                                type="text"
+                                placeholder="admin@example.com"
+                                value="nomor kamar"
+                                name="nomor_kamar"
+                                disabled
+                            />
+                        </div>
+                        <div class="input-style-1">
+                            <label>Tanggal checkin</label>
+                            <input
+                                type="text"
+                                placeholder="admin@example.com"
+                                value="tanggal checkin"
+                                name="tanggal_checkin"
+                                disabled
+                            />
+                        </div>
+                        <div class="input-style-1">
+                            <label>Tanggal checkout</label>
+                            <input
+                                type="text"
+                                placeholder="admin@example.com"
+                                value="tanggal checkout"
+                                name="tanggal_checkout"
+                                disabled
+                            />
+                        </div>
+                        <div class="input-style-1">
+                            <label>Nominal deposit sebelum</label>
+                            <input
+                                type="text"
+                                placeholder="admin@example.com"
+                                name="nominal_deposit_sebelum"
+                                disabled
+                            />
+                        </div>
+                        <div class="input-style-1">
+                            <label>Nominal deposit baru</label>
+                            <input
+                                type="text"
+                                placeholder="Uang deposit yang akan ditambahkan"
+                                value=""
+                                name="nominal_deposit_baru"
+                            />
+                        </div>
+                        <div class="col-12">
+                            <div
+                                class="button-group d-flex justify-content-center flex-wrap"
+                            >
+                                <button
+                                    class="main-btn primary-btn btn-hover w-100 text-center"
+                                    type="submit"
+                                >
+                                    Perbarui
+                                </button>
+                            </div>
+                        </div>
+                        <!-- end row -->
+                    </form>
+                </div>
+                <!-- end card -->
+            </div>
+            <!-- end col -->
+        </main>
+        <!-- ======== main-wrapper end =========== -->
+
+        <!-- ========= All Javascript files linkup ======== -->
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/Chart.min.js"></script>
+        <script src="../../assets/js/dynamic-pie-chart.js"></script>
+        <script src="../../assets/js/moment.min.js"></script>
+        <script src="../../assets/js/fullcalendar.js"></script>
+        <script src="../../assets/js/jvectormap.min.js"></script>
+        <script src="../../assets/js/world-merc.js"></script>
+        <script src="../../assets/js/polyfill.js"></script>
+        <script src="../../assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="../../index.js"></script>
+
+        <script>
+            var params = new URLSearchParams(window.location.search);
+            var id = params.get("id");
+            var totalDeposit = params.get("totalDeposit");
+            window.onload = function () {
+                getTransactionDetail();
+                document.querySelector(
+                    'input[name="nominal_deposit_sebelum"]'
+                ).value = "Rp" + totalDeposit;
+            };
+
+            async function getTransactionDetail() {
+                await axios(
+                    {
+                        method: "get",
+                        url: url + "transaksidetail/" + id,
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+
+                        tanggalBayar = formattedDate(
+                            result.data.data.TanggalTransaksi
+                        );
+                        tanggalCheckin = formattedDate(
+                            result.data.data.TanggalCheckin
+                        );
+                        TanggalCheckout = formattedDate(
+                            result.data.data.TanggalCheckout
+                        );
+
+                        document.querySelector(
+                            'input[name="id_reservasi"]'
+                        ).value = result.data.data.IdReservasi;
+                        document.querySelector(
+                            'input[name="tanggal_transaksi"]'
+                        ).value = tanggalBayar;
+                        document.querySelector(
+                            'input[name="total_pembayaran"]'
+                        ).value = result.data.data.TotalPembayaran;
+                        document.querySelector(
+                            'input[name="nomor_kamar"]'
+                        ).value = result.data.data.NomorKamar;
+                        document.querySelector(
+                            'input[name="tanggal_checkin"]'
+                        ).value = tanggalCheckin;
+                        document.querySelector(
+                            'input[name="tanggal_checkout"]'
+                        ).value = TanggalCheckout;
+                        document.querySelector(
+                            'input[name="jumlah_dewasa"]'
+                        ).value = result.data.data.JumlahDewasa;
+                        document.querySelector(
+                            'input[name="jumlah_anak"]'
+                        ).value = result.data.data.JumlahAnak;
+                        document.querySelector(
+                            'input[name="pilihan_kasur"]'
+                        ).value = result.data.data.PilihanKasur;
+                    })
+                    .catch((err) => {
+                        document.body.classList.remove("loading-indicator");
+                        if (err.response.status == 403) {
+                            window.location.href = "../../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+
+            async function updateDeposit() {
+                var totalPembayaran = document.querySelector(
+                    'input[name="total_pembayaran"]'
+                ).value;
+
+                var minimumBayar = Number(totalPembayaran) / 2;
+
+                var depositBaru = document.querySelector(
+                    'input[name="nominal_deposit_baru"]'
+                ).value;
+
+                if (depositBaru == "") {
+                    const myToast = new Toast(
+                        "Mohon isi field deposit baru"
+                    ).show();
+                    return;
+                }
+
+                if (Number(depositBaru) < minimumBayar) {
+                    const myToast = new Toast(
+                        "Deposit baru harus lebih dari 50% total pembayaran"
+                    ).show();
+                    return;
+                }
+
+                if (Number(depositBaru) < Number(totalDeposit)) {
+                    const myToast = new Toast(
+                        "Deposit baru harus lebih dari deposit sebelumnya"
+                    ).show();
+                    return;
+                }
+
+                await axios(
+                    {
+                        method: "put",
+                        url: url + "transaksi/updatedeposit/" + id,
+                        headers: {
+                            Authorization:
+                                "Bearer " + localStorage.getItem("token"),
+                        },
+                        data: {
+                            deposit: Number(depositBaru),
+                        },
+                    },
+                    document.body.classList.add("loading-indicator")
+                )
+                    .then((result) => {
+                        document.body.classList.remove("loading-indicator");
+                        localStorage.setItem("showToast", "true");
+                        localStorage.setItem(
+                            "message",
+                            "Berhasil update deposit"
+                        );
+                        window.location.href = "./tarif.html";
+                    })
+                    .catch((err) => {
+                        document.body.classList.remove("loading-indicator");
+                        console.log(err);
+                        alert(err.response.data.message);
+                        if (err.response.status == 403) {
+                            window.location.href = "../../auth/signin.html";
+                            localStorage.clear();
+                        }
+                        return Promise.reject(err);
+                    });
+            }
+        </script>
+    </body>
+</html>

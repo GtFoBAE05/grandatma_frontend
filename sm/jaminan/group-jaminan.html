@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="../../assets/css/materialdesignicons.min.css" />
         <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
         <link rel="stylesheet" href="../../assets/css/main.css" />
+        
     </head>
 
     <body>
@@ -333,7 +334,9 @@
                         listJaminan = []
                         jaminan = result.data.data;
                         jaminan.forEach(element => {
-                            listJaminan.push(element);
+                            if(element.status_lunas == false){
+                                listJaminan.push(element);
+                            }
 
                         });
                         const tableData = listJaminan.map((item, index) => {
@@ -348,9 +351,14 @@
                                     <td>${status}</td>
                                     <td>
                                         <div class="action">
-                                            <button class="text-success" onclick='redirectToUpdatePage("${item.id_reservasi}", ${item.status_lunas})'>
+                                            <button class="text-success" onclick='redirectToUpdatePage("${item.id_reservasi}", "${item.total_jaminan}", ${item.status_lunas})'>
                                                 <i class="mdi mdi-update"></i>
                                             </button>
+                                            <button class="text-success" onclick='redirectToReceiptPage("${item.id_reservasi}", "${item.total_jaminan}", "${item.total_pembayaran}", "${item.status_lunas}")'>
+                                                <i class="mdi mdi-credit-card-clock"></i>
+                                            </button>
+
+
                                         </div>    
                                     </td>
                                 </tr>
@@ -415,9 +423,13 @@
                                     <td>${status}</td>
                                     <td>
                                         <div class="action">
-                                            <button class="text-success" onclick='redirectToUpdatePage("${item.id_reservasi}", ${item.status_lunas})'>
+                                            <button class="text-success" onclick='redirectToUpdatePage("${item.id_reservasi}", "${item.total_jaminan}",${item.status_lunas})'>
                                                 <i class="mdi mdi-update"></i>
                                             </button>
+                                            <button class="text-success" onclick='redirectToReceiptPage("${item.id_reservasi}", "${item.total_jaminan}", "${item.total_pembayaran}", ${item.status_lunas})'>
+                                                <i class="mdi mdi-credit-card-clock"></i>
+                                            </button>
+
                                         </div>    
                                     </td>
                                 </tr>
@@ -440,16 +452,63 @@
                     });
             }
 
-            function redirectToUpdatePage(id_reservasi, status_lunas) {
+            function redirectToReceiptPage(id_reservasi,nominal_sudah_bayar, nominal_total_bayar, status_lunas) {
+                console.log(status_lunas)
+                console.log(nominal_sudah_bayar);
                 if(status_lunas){
                     const myToast = new Toast("Data sudah lunas").show();
-                    return;
+                    
+                    params = new URLSearchParams()
+                    params.append("idReservasi", id_reservasi);
+                    params.append("nominalSudahBayar", nominal_sudah_bayar);
+                window.location.href = "./jaminan-receipt.html?" + params.toString();
+                return;
+                    
+                }else{
+                    let persentase_pembayaran = (nominal_sudah_bayar / nominal_total_bayar) * 100;
+
+                    let lebih_dari_50_persen = persentase_pembayaran > 50;
+
+                    if (lebih_dari_50_persen) {
+                        params = new URLSearchParams()
+                        console.log(nominal_sudah_bayar)
+                        params.append("idReservasi", id_reservasi);
+                        params.append("nominalSudahBayar", nominal_sudah_bayar);
+                        window.location.href = "./group-jaminan-receipt.html?" + params.toString();
+                    } else {
+                        const myToast = new Toast("Nominal sudah bayar kurang dari 50%").show();
+                    }
                 }
 
 
-                params = new URLSearchParams()
+                
+                
+            }
+
+            function redirectToUpdatePage(id_reservasi, nominal_sudah_bayar, status_lunas) {
+                console.log(status_lunas)
+                if(status_lunas){
+                    const myToast = new Toast("Data sudah lunas").show();
+                    params = new URLSearchParams()
+                    params.append("idReservasi", id_reservasi);
+                    params.append("nominalSudahBayar", nominal_sudah_bayar);
+                window.location.href = "./group-jaminan-receipt.html?" + params.toString();
+                    return;
+                    
+                //     params = new URLSearchParams()
+                // params.append("idReservasi", id_reservasi);
+                // window.location.href = "./jaminan-receipt.html?" + params.toString();
+                    
+                }else{
+                    params = new URLSearchParams()
                 params.append("idReservasi", id_reservasi);
-                window.location.href = "./update_jaminan.html?" + params.toString();
+                window.location.href = "./pay-jaminan.html?" + params.toString();
+                    
+                }
+
+
+                
+                
             }
 
             

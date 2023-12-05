@@ -1,4 +1,4 @@
-const url = "http://localhost:8080/api/";
+const url = "https://grandatma-api-gtfobae05.vercel.app/api/";
 
 function formattedDate(inputDate) {
     const date = new Date(inputDate);
@@ -28,6 +28,11 @@ function isTwoMonthsAhead(dateString) {
     twoMonthsLater.setMonth(currentDate.getMonth() + 2);
 
     return inputDate > twoMonthsLater;
+}
+
+function formatDate(date) {
+    const options = { day: "numeric", month: "long", year: "numeric" };
+    return date.toLocaleDateString("id-ID", options);
 }
 
 class ConfirmDialog {

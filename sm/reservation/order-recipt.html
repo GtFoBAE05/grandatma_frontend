@@ -350,19 +350,19 @@
                         document.getElementById("lamaHari").innerHTML =
                             result.data.days;
                         document.getElementById("nominalKamar").innerHTML =
-                            "Rp" + result.data.tarif;
+                            "Rp" + result.data.tarif / result.data.days;
                         document.getElementById("tarifKamar").innerHTML =
-                            "Rp" + result.data.tarif * result.data.days;
+                            "Rp" + result.data.tarif;
 
                         //total
                         document.getElementById("totalHargaKamar").innerHTML =
-                            "Rp" + result.data.tarif * result.data.days;
+                            "Rp" + result.data.tarif;
 
                         //permintaan khusus
                         const fasilitasTambahanUl = document.getElementById('fasilitasTambahan');
                         result.data.fasilitas.forEach(element => {
                             const li = document.createElement('li');
-                            li.textContent = element.JumlahUnit + " " + element.NamaFasilitas;
+                            li.textContent = element.JumlahUnit + " " + element.NamaFasilitas + " - Rp" + element.Harga + "/unit";
                             fasilitasTambahanUl.appendChild(li);
 
                         });

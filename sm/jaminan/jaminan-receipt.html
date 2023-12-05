@@ -20,6 +20,11 @@
         />
         <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
         <link rel="stylesheet" href="../../assets/css/main.css" />
+
+        <script src="https://unpkg.com/pdf-lib"></script>
+        
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
     </head>
     <body>
         <!-- ======== Preloader =========== -->
@@ -29,13 +34,13 @@
         <!-- ======== Preloader =========== -->
 
         <!-- ======== main-wrapper start =========== -->
-        <main class="auth-wrapper">
+        <main class="auth-wrapper" id="auth-wrapper">
             <div class="container-fluid">
                 <!-- Invoice Wrapper Start -->
-                <div class="invoice-wrapper">
+                <div class="invoice-wrapper" >
                     <div class="row">
                         <div class="col-12">
-                            <div class="invoice-card card-style m-5">
+                            <div class="invoice-card card-style m-5" id="invoice-wrapper">
                                 <div class="invoice-header">
                                     <div class="invoice-for">
                                         <h2 class="mb-10">
@@ -228,18 +233,16 @@
                                             <a
                                                 href="../index.html"
                                                 class="main-btn primary-btn-outline btn-hover"
+                                                id="backButton"
                                             >
                                                 Beranda
                                             </a>
                                         </li>
-                                        <!-- <li class="m-2">
-                                            <a
-                                                href="#0"
-                                                class="main-btn primary-btn btn-hover"
-                                            >
-                                                Send Invoice
-                                            </a>
-                                        </li> -->
+
+                                        <li class="m-2">
+                                            <button onclick="generatePDF()" 
+                                            id="generatePdfButton">To PDF</button>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -266,18 +269,23 @@
         <script src="../../assets/js/polyfill.js"></script>
         <script src="../../assets/js/main.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
         <script src="../../index.js"></script>
 
         <script>
-            // var params = new URLSearchParams(window.location.search);
-            // var id = params.get("id_transaksi");
-            var id = ""
+            var params = new URLSearchParams(window.location.search);
+            var id = params.get("idReservasi");
+            // var id = "P61123-53"
 
             const tKamarBody = document.getElementById("kamar");
             const tFasilitasBody = document.getElementById("fasilitas");
 
             window.onload = function() {
-                id = localStorage.getItem('idReservasi');
+                // id = localStorage.getItem('idReservasi');
 
                 const showToast = localStorage.getItem('showToast');
                 if (showToast === 'true') {
@@ -361,9 +369,8 @@
                         //permintaan khusus
                         const fasilitasTambahanUl = document.getElementById('fasilitasTambahan');
                         result.data.fasilitas.forEach(element => {
-                            console.log(element);
                             const li = document.createElement('li');
-                            li.textContent = element.JumlahUnit + " " + element.NamaFasilitas + " - Rp" + element.Harga + "/unit";
+                            li.textContent = element.JumlahUnit + " " + element.NamaFasilitas;
                             fasilitasTambahanUl.appendChild(li);
 
                         });
@@ -378,6 +385,74 @@
                         return Promise.reject(err);
                     });
             }
+
+            // function toPDF () {
+                // html2pdf()
+                //     // (C1) SET OPTIONS
+                //     .set({
+                //     margin: 1,
+                //     filename: "demo.pdf",
+                //     image: { type: "jpeg", quality: 0.8 },
+                //     enableLinks : true,
+                //     jsPDF: { format: "A4", orientation: "landscape" }
+                //     })
+                
+                //     // (C2) GET CONTENT FROM SECTION & SAVE
+                //     .from(document.getElementById("auth-wrapper"))
+                //     .save();
+                
+            // }
+
+            // function generatePDF() {
+            //     const element = document.getElementById('invoice-wrapper');
+            //     const opt = {
+            //     filename: 'myPage.pdf',
+            //     margin: 2,
+            //     image: {type: 'jpeg', quality: 0.9},
+            //     jsPDF: {format: 'a4', orientation: 'landscape'}
+            //     };
+            //     html2pdf().set({
+            //     pagebreak: {mode: 'css' }
+            //     });
+            //     // New Promise-based usage:
+            //     html2pdf().set(opt).from(element).save();
+
+            // }
+
+            function generatePDF() {
+    const quality = 2; 
+
+    const buttonElement = document.getElementById('backButton');
+    buttonElement.style.display = 'none';
+
+    const generatePdfButtonElement = document.getElementById('generatePdfButton');
+    generatePdfButtonElement.style.display = 'none';
+
+    html2canvas(document.getElementById('invoice-wrapper'), { scale: quality })
+        .then(canvas => {
+            const pdf = new jsPDF('l', 'mm', 'a4');
+            const imgData = canvas.toDataURL('image/png');
+            const pageSize = pdf.internal.pageSize;
+            const imgWidth = pageSize.width;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            // Jika tinggi gambar melebihi tinggi halaman, sesuaikan tinggi gambar
+            if (imgHeight > pageSize.height) {
+                const scale = pageSize.height / imgHeight;
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth * scale, pageSize.height);
+            } else {
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            }
+            pdf.save("receipt.pdf");
+
+            buttonElement.style.display = 'block';
+            generatePdfButtonElement.style.display = 'block';
+        });
+}
+
+
+
+
         </script>
     </body>
 </html>

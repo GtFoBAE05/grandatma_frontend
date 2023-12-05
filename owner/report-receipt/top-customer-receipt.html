@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="shortcut icon"
+            href="../../assets/images/favicon.svg"
+            type="image/x-icon"
+        />
+        <title>Order recipt | GrandAtma</title>
+
+        <!-- ========== All CSS files linkup ========= -->
+        <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="../../assets/css/lineicons.css" />
+        <link
+            rel="stylesheet"
+            href="../../assets/css/materialdesignicons.min.css"
+        />
+        <link rel="stylesheet" href="../../assets/css/fullcalendar.css" />
+        <link rel="stylesheet" href="../../assets/css/main.css" />
+
+        <script src="https://unpkg.com/pdf-lib"></script>
+        
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    </head>
+    <body>
+        <!-- ======== Preloader =========== -->
+        <div id="preloader">
+            <div class="spinner"></div>
+        </div>
+        <!-- ======== Preloader =========== -->
+
+        <!-- ======== main-wrapper start =========== -->
+        <main class="auth-wrapper" id="auth-wrapper">
+            <div class="container-fluid">
+            <!-- ========== table components start ========== -->
+            <section class="table-components">
+                <div class="container-fluid">
+                    <!-- ========== title-wrapper start ========== -->
+                    <div class="title-wrapper pt-30">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <!-- <div class="title">
+                                    <h2>Laporan 5 Customer Reservasi Terbanyak</h2>
+                                </div>
+                                <div class="subtitle">
+                                    <h2></h2>
+                                </div> -->
+                            </div>
+                            <!-- end col -->
+                            
+                            <!-- end col -->
+
+                        </div>
+                        <!-- end row -->
+                    </div>
+                    <!-- ========== title-wrapper end ========== -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card-style mb-30">
+                                <div class="text-center">
+                                    <img
+                                        src="../../assets/images/logo/grandatmalogo.jpg"
+                                        alt=""
+                                    />
+                                </div>
+                                <p class="text-center">Jl. P. Mangkubumi No.18, Yogyakarta 55233
+                                    Telp. (0274) 487711
+                                    </p>
+                                    <hr class="my-4 border-4">
+                                <h6 class="mb-10 text-center">Laporan 5 Customer Reservasi Terbanyak</h6>
+                                    <h4 class="text-sm mb-20 ">
+                                        
+                                    </h4>
+                                <div class="table-wrapper table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <h6>Nomor</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Nama Customer</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Jumlah Reservasi</h6>
+                                                </th>
+                                                <th>
+                                                    <h6>Total Pembayaran</h6>
+                                                </th>
+                                            </tr>
+                                            <!-- end table row-->
+                                        </thead>
+                                        <tbody id="newCustBody">
+                                        </tbody>
+                                        
+
+                                    </table>
+                                    <p class="date-paragraph text-end" id="dateParagraph">Another paragraph</p>
+                                    <!-- end table -->
+                                </div>
+                                <div class="invoice-action">
+                                    <ul
+                                        class="d-flex flex-wrap align-items-center justify-content-center"
+                                    >
+                                        <li class="m-2">
+                                            <button onclick="generatePDF()" 
+                                            id="generatePdfButton">To PDF</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- end card -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- ========== tables-wrapper end ========== -->
+                </div>
+                <!-- end container -->
+            </section>
+            <!-- ========== table components end ========== -->
+            </div>
+            <!-- end col -->
+        </main>
+        <!-- ======== main-wrapper end =========== -->
+
+        <!-- ========= All Javascript files linkup ======== -->
+        <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../../assets/js/Chart.min.js"></script>
+        <script src="../../assets/js/dynamic-pie-chart.js"></script>
+        <script src="../../assets/js/moment.min.js"></script>
+        <script src="../../assets/js/fullcalendar.js"></script>
+        <script src="../../assets/js/jvectormap.min.js"></script>
+        <script src="../../assets/js/world-merc.js"></script>
+        <script src="../../assets/js/polyfill.js"></script>
+        <script src="../../assets/js/main.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+        <script src="../../index.js"></script>
+
+        <script>
+            var params = new URLSearchParams(window.location.search);
+            var year = params.get("year");
+            const today = new Date();
+            document.querySelector('.mb-20').innerText = `Tahun: ${year}`
+            document.getElementById("dateParagraph").textContent = `dicetak tanggal ${formatDate(today)}`;;
+            const months = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            let listCustomer = [];
+            const tBody = document.getElementById("newCustBody");
+            const totalBody = document.getElementById("totalBody");
+
+            window.onload = function () {
+                const showToast = localStorage.getItem('showToast');
+                if (showToast === 'true') {
+                    let pesan = localStorage.getItem('message');
+                    const myToast = new Toast(pesan).show();
+                    localStorage.setItem('showToast', 'false');
+                    localStorage.setItem('message', '');
+                }
+                searchTopCustomer();
+            };
+
+            
+            
+            async function searchTopCustomer() {
+
+                try {
+
+                    document.body.classList.add("loading-indicator");
+
+                    const response = await axios({
+                        method: "get",
+                        url: url + `report/topcustomer/${year}`,
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem("token")
+                        }
+                    });
+
+                    console.log(response);
+
+                    listCustomer = response.data.data;
+
+                    if(response.data.data === null) {
+                        const myToast = new Toast("Data tidak ditemukan").show();
+                        
+                    }
+                    
+
+                    const tableData = listCustomer.map((item, index) => {
+                        return `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${item.name}</td>
+                                <td>${item.reservation_count}</td>
+                                <td>Rp${item.total_payment}</td>
+                            </tr>
+                        `;
+                    }).join("");
+
+
+                    tBody.innerHTML = tableData;
+
+                    document.body.classList.remove("loading-indicator");
+                } catch (error) {
+                    console.log(error);
+                    document.body.classList.remove("loading-indicator");
+                    if (error.response && error.response.status === 404) {
+                        const myToast = new Toast("Data tidak ditemukan").show();
+                    }
+                    if (error.response && error.response.status === 403) {
+                        window.location.href = "../../auth/signin.html";
+                        localStorage.clear();
+                    }
+                }
+            }
+
+            
+
+            function generatePDF() {
+    const quality = 2; 
+
+    const generatePdfButtonElement = document.getElementById('generatePdfButton');
+    generatePdfButtonElement.style.display = 'none';
+
+    html2canvas(document.getElementById('auth-wrapper'), { scale: quality })
+        .then(canvas => {
+            const pdf = new jsPDF('l', 'mm', 'a4');
+            const imgData = canvas.toDataURL('image/png');
+            const pageSize = pdf.internal.pageSize;
+            const imgWidth = pageSize.width;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            // Jika tinggi gambar melebihi tinggi halaman, sesuaikan tinggi gambar
+            if (imgHeight > pageSize.height) {
+                const scale = pageSize.height / imgHeight;
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth * scale, pageSize.height);
+            } else {
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            }
+            pdf.save("receipt.pdf");
+
+            generatePdfButtonElement.style.display = 'block';
+        });
+}
+
+
+
+
+        </script>
+    </body>
+</html>

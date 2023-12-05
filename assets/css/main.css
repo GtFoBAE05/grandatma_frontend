@@ -3458,6 +3458,12 @@ h6,
   margin-right: 15px;
 }
 
+@media print {
+  @page {
+    margin: 0;
+  }
+}
+
 .legend-marketing .bg-color {
   width: 8px;
   height: 8px;

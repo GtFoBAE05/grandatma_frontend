@@ -103,7 +103,7 @@
                                     </div>
                                     <!-- end col -->
 
-                                    <div class="col-12">
+                                    <!-- <div class="col-12">
                                         <div class="input-style-1">
                                             <label>Nomor rekening</label>
                                             <input
@@ -113,7 +113,7 @@
                                             />
                                         </div>
                                     </div>
-                                    <!-- end col -->
+                                    end col -->
 
                                     <div class="select-style-1">
                                         <label>Pilihan kasur</label>
@@ -132,6 +132,40 @@
 
                                     <div id="dynamicFields">
                                         <!-- Dynamic fields will be inserted here -->
+                                    </div>
+
+                                    <div
+                                        class="col-12"
+                                        id="fasilitas_kamar_div"
+                                        style="display: none"
+                                    >
+                                        <div class="input-style-1">
+                                            <label name="fasilitas_kamar_label"
+                                                >Total Fasilitas Kamar</label
+                                            >
+                                            <input
+                                                name="total_fasilitas_kamar"
+                                                type="number"
+                                                placeholder="Total fasilitas kamar"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        class="col-12"
+                                        id="total_kamar_div"
+                                        style="display: none"
+                                    >
+                                        <div class="input-style-1">
+                                            <label name="totalTarifLabel"
+                                                >Total Tarif Kamar</label
+                                            >
+                                            <input
+                                                name="total_tarif_kamar"
+                                                type="number"
+                                                placeholder="Total Tarif_kamar"
+                                            />
+                                        </div>
                                     </div>
 
                                     <div
@@ -222,6 +256,10 @@
 
             let fieldCounter = 0;
 
+            let tafifTotal = 0;
+
+            let fasilitasTotal = 0;
+
             let listPesananTambahanFasilitas = [];
 
             let inputValues = {};
@@ -250,9 +288,7 @@
                 jumlahAnakValue = document.querySelector(
                     'input[name="jumlah_anak"]'
                 ).value;
-                nomorRekeningValue = document.querySelector(
-                    'input[name="nomor_rekening"]'
-                ).value;
+                // nomorRekeningValue = "";
                 pilihanKasurValue = document.querySelector(
                     'select[name="pilihan_kasur"]'
                 ).value;
@@ -266,10 +302,23 @@
                     "jumlahDewasaValue";
                 document.querySelector('input[name="jumlah_anak"]').id =
                     "jumlahAnakValue";
-                document.querySelector('input[name="nomor_rekening"]').id =
-                    "nomorRekeningValue";
+                // document.querySelector('input[name="nomor_rekening"]').id =
+                //     "nomorRekeningValue";
                 document.querySelector('select[name="pilihan_kasur"]').id =
                     "pilihanKasurValue";
+
+                var tarif = params.get("tarif");
+                var startDate = new Date(tanggalMulai);
+                var endDate = new Date(tanggalSelesai);
+                var timeDifference = endDate - startDate;
+                var daysDifference = Math.floor(
+                    timeDifference / (1000 * 60 * 60 * 24)
+                );
+                tafifTotal = tarif * daysDifference;
+
+                document.querySelector(
+                    'input[name="total_tarif_kamar"]'
+                ).value = tafifTotal;
 
                 getPilihanKasur();
                 getFasilitasBerbayar();
@@ -371,12 +420,39 @@
                 if (!validateFasilitasTambahan()) return;
                 if (!validateField()) return;
 
+                const uniqueList = Array.from(
+                    new Set(listPesananTambahanFasilitas.map(JSON.stringify)),
+                    JSON.parse
+                );
+
+                listPesananTambahanFasilitas.forEach((item) => {
+                    listFasilitasTambahan.forEach((fasilitas) => {
+                        if (item.fasilitas == fasilitas.id) {
+                            fasilitasTotal =
+                                fasilitasTotal + fasilitas.harga * item.input;
+                        }
+                    });
+                });
+
+                console.log(tafifTotal);
+
+                document.querySelector(
+                    'input[name="total_fasilitas_kamar"]'
+                ).value = fasilitasTotal;
+
                 var addFacilitiesButton = document.getElementById(
                     "addFacilitiesButton"
                 );
                 var showPreviousButton =
                     document.getElementById("showPreviousButton");
                 var submitButton = document.getElementById("submitButton");
+
+                var fasilitasKamarDiv = document.getElementById(
+                    "fasilitas_kamar_div"
+                );
+
+                var totalTarifKamar =
+                    document.getElementById("total_kamar_div");
 
                 if (addFacilitiesButton && showPreviousButton && submitButton) {
                     // Hide the buttons
@@ -385,6 +461,8 @@
 
                     // Show the submit button
                     submitButton.style.display = "block";
+                    totalTarifKamar.style.display = "block";
+                    fasilitasKamarDiv.style.display = "";
 
                     // Implement your logic to show previous values
                 } else {
@@ -475,7 +553,7 @@
                             tanggal_checkout: inputValues.tanggal_checkout,
                             jumlah_dewasa: Number(inputValues.jumlah_dewasa),
                             junlah_anak: Number(inputValues.jumlah_anak),
-                            nomor_rekening: inputValues.nomor_rekening,
+                            nomor_rekening: "",
                             pilihan_kasur: selectValues.pilihan_kasur,
                         },
                     }).catch((error) => {
@@ -589,9 +667,9 @@
                 jumlahAnakValue = document.querySelector(
                     'input[name="jumlah_anak"]'
                 ).value;
-                nomorRekeningValue = document.querySelector(
-                    'input[name="nomor_rekening"]'
-                ).value;
+                // nomorRekeningValue = document.querySelector(
+                //     'input[name="nomor_rekening"]'
+                // ).value;
                 pilihanKasurValue = document.querySelector(
                     'select[name="pilihan_kasur"]'
                 ).selectedOptions[0].value;
@@ -601,7 +679,7 @@
                     tanggalCheckoutValue == "" ||
                     jumlahDewasaValue == "" ||
                     jumlahAnakValue == "" ||
-                    nomorRekeningValue == "" ||
+                    // nomorRekeningValue == "" ||
                     pilihanKasurValue == ""
                 ) {
                     const myToast = new Toast("Mohon isi semua field").show();

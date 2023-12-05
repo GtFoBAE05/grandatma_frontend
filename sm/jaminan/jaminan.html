@@ -425,14 +425,16 @@
 
             function redirectToUpdatePage(id_reservasi, status_lunas) {
                 if(status_lunas){
-                    const myToast = new Toast("Data sudah lunas").show();
+                    params = new URLSearchParams()
+                        params.append("idReservasi", id_reservasi);
+                        window.location.href = "./jaminan-receipt.html?" + params.toString();
                     return;
                 }
 
 
                 params = new URLSearchParams()
                 params.append("idReservasi", id_reservasi);
-                window.location.href = "./update_jaminan.html?" + params.toString();
+                window.location.href = "./pay-jaminan.html?" + params.toString();
             }
 
             
